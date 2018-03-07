@@ -9,7 +9,7 @@ breed [farms farm ]
 breed[ cityhalls cityhall ]
 
 farmers-own [ energy load my_house my_farm my_cityhall]
-bandits-own [ energy load ]
+bandits-own [ energy load my_house]
 soldiers-own [ energy ]
 
 houses-own [inventory ]
@@ -39,7 +39,7 @@ to setup
   ]
 
   create-farmers farmers_num [
-    set color orange
+    set color green
     ;set shape "person farmer"
 
     set energy farmers_energy
@@ -59,11 +59,13 @@ to setup
 
   create-bandits bandits_num [
     setxy random-xcor random-ycor
-    set color blue
+    set color red
     ;set shape "person lumberjack"
 
     set energy bandits_energy
     set load 0
+
+    set my_house one-of houses
   ]
 end
 
@@ -74,22 +76,37 @@ to go
     ifelse am_i_on my_farm [
       work
     ][
-        ifelse am_i_on my_house [
-            rest
-        ][
-            ifelse am_i_on my_cityhall [
-                pay_taxes
-            ][
-                fd 1
-            ]
+      ifelse am_i_on my_house [
+        rest
+        if energy  >= farmers_energy [
+          move-towards my_farm
         ]
+      ][
+        ifelse am_i_on my_cityhall [
+          pay_taxes
+        ][
+          fd 1
+        ]
+      ]
     ]
 
     decrement_energy
   ]
 
   ask bandits [
-    fd 1
+    if am_i_on my_house [
+      rest
+      if energy  >= farmers_energy [
+        move-towards min-one-of farmers [distance myself]
+      ]
+    ]
+    ifelse energy = 0 or load > 0[
+      move-towards my_house
+    ][
+      move-towards min-one-of farmers [distance myself]
+    ]
+    assault
+    decrement_energy
   ]
 end
 
@@ -100,6 +117,18 @@ end
 to move-towards [place]
   face place
   fd 1
+end
+
+to assault
+  let victim one-of farmers-here
+  if victim != nobody [
+    let temp 0
+    ask victim[
+      set temp load
+      set load 0
+    ]
+    set load (load + temp)
+  ]
 end
 
 to work
@@ -117,10 +146,6 @@ end
 to rest
   set load load - 1
   set energy  energy + energy_from_food
-
-  if energy  >= farmers_energy [
-    move-towards my_farm
-  ]
 end
 
 to pay_taxes
@@ -220,7 +245,7 @@ farmers_num
 farmers_num
 0
 100
-2.0
+32.0
 1
 1
 NIL
@@ -235,7 +260,7 @@ bandits_num
 bandits_num
 0
 100
-0.0
+6.0
 1
 1
 NIL
