@@ -1,0 +1,127 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{Purpose}
+
+The purpose of the model is to analyse the behaviour of an artificial society
+populated by bandits, farmers, and soldiers based on policies that are taken
+as parameters of the model
+
+\section{Entities, state variables and scales}
+\subsection{Entities}
+\begin{itemize}
+\item Bandits: Steal resources from farmers to sustain themselves while trying
+  to avoid soldiers.
+\item Farmers: Gather food to sustain themselves and the soldiers by way
+  of paying taxes while avoiding bandits.
+\item Soldiers: Invest resources in the search for bandits to capture
+\item Buildings: Store agent's resorces for latter consumption
+\end{itemize}
+
+\subsection{State variables}
+Human agents
+\begin{itemize}
+\item Energy
+\item Capcity
+\item Occupation
+\end{itemize}
+
+Buildings
+\begin{itemize}
+\item storage
+\end{itemize}
+
+\subsection{Scales}
+ticks 6 min
+patch 1 kilometro cuadrado
+
+\section{Process overview and scheduling}
+\begin{itemize}
+\item move
+\item collect
+\item switch-occupation
+\end{itemize}
+
+On each tick all the agents either move or collect depending on the patch that
+they are and the energy available, then if the conditions are not favorable for
+the agent then, based on a fixed probability, they choose to continue in their
+current occupation or switch to another one.
+
+\section{Design concepts}
+
+\subsection{Basic principles}
+all agents want to collect resorces, but not in a standard way
+there is a finite amount of weight and energy that each individual can have
+
+\subsection{Emergence}
+the behaviour that emerge from the model are the agglomeration of agents
+in some parts of the map
+
+\subsection{Adaptation}
+The agents adapt to their current situation by means of changing their
+occupation if the conditions are unfavorable
+
+\subsection{Objectives}
+The objective of the farmers is to collect as much resources as it can. In the
+case of bandits is to steal such resources from farmers. And soldiers seek to
+decrease the amount of bandits in the society. This objectives are affected by
+each individual's state variables.
+
+\subsection{Learning}
+Learning capabilities of agents are not taken into account in this model
+
+\subsection{Prediction}
+Prediction procedures are not taken into account as part of the agent's behaviour
+in this model
+
+\subsection{Sensing}
+Each agent can see other agents in their vicinity and can decide how to act
+based on this knowledge
+
+\subsection{Interaction}
+Bandits assault farmers thus stealing all the resources they are currently
+carrying. Soldiers capture bandits and try to convert them into farmers.
+
+\subsection{Stochasticity}
+The process in which an agent changes occupation is random and the success in
+converting a bandit is also done randomly, which implies that each execution can
+not be reproduced exactly
+
+\subsection{Collectives}
+Agents are divided in three groups that defines the behaviour they have to follow
+and the way they are going to seek their objectives.
+
+\subsection{Observation}
+The variables that are necessary to know the current state of the system are
+the population of each social group, the violence indicator and the capital flow
+
+\section{Details}
+
+\subsection{Initialization}
+The position of all agents are chosen randomly, the amount of subjects per
+social group is recived as parameter to the model as well as the probabilities
+of switching current faction.
+
+\subsection{Input data}
+Besides the parameters specified previously the model has no input data that
+is used during execution.
+
+\subsection{Submodels}
+Farmers move towards the nearest farm or city hall depending on the weight
+they are carrying but if their energy is suffiently low they will decide to go home
+to refill it. If there is a nearby bandit they will suspend what they are doing
+to move to the nearest soldier in their field of view or given the lack of they
+will move towards the city hall.
+
+Bandits move towards the nearest farmer in their field of view trying to assault them,
+if there is none then they will walk to the nearest farm or city hall. They will also
+try to avoid any soldier. Finally if their energy is too low will return to their home
+to refill it.
+
+Soldiers move towards the nearest bandit in their field of view trying to convert
+them into farmers, in the case there is none, they will move towards the nearest
+farm or city hall, but if the energy they have is too low they will move towards
+the nearest barrack to refill it.
+
+\end{document}
