@@ -1,27 +1,55 @@
+;set breed bandits ; change occupation
+
 breed [ farmers farmer ]
 breed [ bandits bandit ]
 breed [ soldiers soldier ]
 
 breed [ houses house ]
+breed [farms farm ]
+breed[ cityhalls cityhall ]
 
-farmers-own [ energy load ]
+farmers-own [ energy load my_house my_farm my_cityhall]
 bandits-own [ energy load ]
 soldiers-own [ energy ]
+
+houses-own [inventory ]
 
 to setup
   ca
   reset-ticks
 
+  create-cityhalls 1 [
+    setxy random-xcor random-ycor
+    set shape "house colonial"
+    set size 2
+  ]
+
   create-houses 1 [
     setxy random-xcor random-ycor
     set shape "house"
     set size 2
+
+    set inventory 0
+  ]
+
+  create-farms 1 [
+    setxy random-xcor random-ycor
+    set shape "cow"
+    set size 2
   ]
 
   create-farmers farmers_num [
-    setxy random-xcor random-ycor
     set color orange
     ;set shape "person farmer"
+
+    set energy farmers_energy
+    set load 0
+
+    set my_farm one-of farms
+    set my_house one-of houses
+    set my_cityhall min-one-of cityhalls [distance myself]
+
+    move-to my_house
   ]
 
 ;  crt 5 [
@@ -33,6 +61,9 @@ to setup
     setxy random-xcor random-ycor
     set color blue
     ;set shape "person lumberjack"
+
+    set energy bandits_energy
+    set load 0
   ]
 end
 
@@ -40,29 +71,72 @@ to go
   tick
 
   ask farmers [
-    let closest-bandit min-one-of bandits [ distance myself ] ; get closest bandit
-
-    ifelse distance closest-bandit > 5 [
-      set heading random 360
-      fd 1
+    ifelse am_i_on my_farm [
+      work
     ][
-      face closest-bandit ; set heading towards closest bandit
-      rt 180  ; rotate to opposite direction
-      fd 1
+        ifelse am_i_on my_house [
+            rest
+        ][
+            ifelse am_i_on my_cityhall [
+                pay_taxes
+            ][
+                fd 1
+            ]
+        ]
     ]
+
+    decrement_energy
   ]
 
   ask bandits [
-    let closest-farmer min-one-of farmers [ distance myself ]
-    face closest-farmer ; set heading towards closest farmer
     fd 1
+  ]
+end
+
+to-report am_i_on [place]
+  report member? place turtles-here
+end
+
+to move-towards [place]
+  face place
+  fd 1
+end
+
+to work
+  set load load + 1
+
+  if energy  = 0 [
+    move-towards my_house
+  ]
+
+  if load = farmers_max_load [
+    move-towards my_cityhall
+  ]
+end
+
+to rest
+  set load load - 1
+  set energy  energy + energy_from_food
+
+  if energy  >= farmers_energy [
+    move-towards my_farm
+  ]
+end
+
+to pay_taxes
+  move-towards my_house
+end
+
+to decrement_energy
+  if energy > 0 [
+      set energy energy - 1
   ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-338
+616
 10
-775
+1053
 448
 -1
 -1
@@ -146,7 +220,7 @@ farmers_num
 farmers_num
 0
 100
-30.0
+2.0
 1
 1
 NIL
@@ -161,8 +235,98 @@ bandits_num
 bandits_num
 0
 100
-36.0
+0.0
 1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+212
+80
+384
+113
+farmers_energy
+farmers_energy
+0
+100
+63.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+211
+134
+383
+167
+bandits_energy
+bandits_energy
+0
+100
+50.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+408
+79
+580
+112
+farmers_max_load
+farmers_max_load
+0
+100
+10.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+408
+134
+580
+167
+bandits_max_load
+bandits_max_load
+0
+100
+50.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+19
+201
+191
+234
+energy_from_food
+energy_from_food
+0
+100
+10.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+294
+215
+466
+248
+tax_rate
+tax_rate
+0
+1
+0.1
+0.01
 1
 NIL
 HORIZONTAL
@@ -353,6 +517,23 @@ Rectangle -7500403 true true 45 120 255 285
 Rectangle -16777216 true false 120 210 180 285
 Polygon -7500403 true true 15 120 150 15 285 120
 Line -16777216 false 30 120 270 120
+
+house colonial
+false
+0
+Rectangle -7500403 true true 270 75 285 255
+Rectangle -7500403 true true 45 135 270 255
+Rectangle -16777216 true false 124 195 187 256
+Rectangle -16777216 true false 60 195 105 240
+Rectangle -16777216 true false 60 150 105 180
+Rectangle -16777216 true false 210 150 255 180
+Line -16777216 false 270 135 270 255
+Polygon -7500403 true true 30 135 285 135 240 90 75 90
+Line -16777216 false 30 135 285 135
+Line -16777216 false 255 105 285 135
+Line -7500403 true 154 195 154 255
+Rectangle -16777216 true false 210 195 255 240
+Rectangle -16777216 true false 135 150 180 180
 
 leaf
 false
