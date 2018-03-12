@@ -5,11 +5,11 @@ breed [ bandits bandit ]
 breed [ soldiers soldier ]
 
 breed [ houses house ]
-breed [farms farm ]
+breed [ farms farm ]
 breed[ cityhalls cityhall ]
 
-farmers-own [ energy load my_house my_farm my_cityhall]
-bandits-own [ energy load my_house]
+farmers-own [ energy load my_house my_farm my_cityhall destination tax_doubt ]
+bandits-own [ energy load my_house destination]
 soldiers-own [ energy ]
 
 houses-own [inventory ]
@@ -27,7 +27,7 @@ to setup
   create-houses 1 [
     setxy random-xcor random-ycor
     set shape "house"
-    set size 2
+    set size 1
 
     set inventory 0
   ]
@@ -35,7 +35,7 @@ to setup
   create-farms 1 [
     setxy random-xcor random-ycor
     set shape "cow"
-    set size 2
+    set size 1
   ]
 
   create-farmers farmers_num [
@@ -50,6 +50,7 @@ to setup
     set my_cityhall min-one-of cityhalls [distance myself]
 
     move-to my_house
+    set destination my_farm
   ]
 
 ;  crt 5 [
@@ -66,6 +67,7 @@ to setup
     set load 0
 
     set my_house one-of houses
+    set destination closest_farmer
   ]
 end
 
@@ -73,50 +75,38 @@ to go
   tick
 
   ask farmers [
-    ifelse am_i_on my_farm [
-      work
-    ][
-      ifelse am_i_on my_house [
-        rest
-        if energy  >= farmers_energy [
-          move-towards my_farm
-        ]
-      ][
-        ifelse am_i_on my_cityhall [
-          pay_taxes
-        ][
-          fd 1
-        ]
-      ]
-    ]
+    set label load
+    if i_am_on my_farm [ work ]
+    if i_am_on my_house [ rest_f ]
+    if i_am_on my_cityhall [ pay_taxes ]
 
+    move_towards destination
     decrement_energy
   ]
 
   ask bandits [
-    if am_i_on my_house [
-      rest
-      if energy  >= farmers_energy [
-        move-towards min-one-of farmers [distance myself]
-      ]
+    if i_am_on my_house [ rest_b ]
+
+    if energy = 0 or load > 0 [
+      set destination my_house
     ]
-    ifelse energy = 0 or load > 0[
-      move-towards my_house
-    ][
-      move-towards min-one-of farmers [distance myself]
-    ]
+
     assault
+
+    move_towards destination
     decrement_energy
   ]
 end
 
-to-report am_i_on [place]
+to-report i_am_on [place]
   report member? place turtles-here
 end
 
-to move-towards [place]
-  face place
-  fd 1
+to move_towards [place]
+  if not i_am_on place [
+      face place
+      fd 1
+  ]
 end
 
 to assault
@@ -134,28 +124,42 @@ end
 to work
   set load load + 1
 
-  if energy  = 0 [
-    move-towards my_house
-  ]
-
-  if load = farmers_max_load [
-    move-towards my_cityhall
-  ]
+  if energy  = 0 [ set destination my_house ]
+  if load = farmers_max_load [ set tax_doubt 5
+                                                          set destination my_cityhall ]
 end
 
-to rest
-  set load load - 1
-  set energy  energy + energy_from_food
+to rest_f
+  if load > 0 [
+    set load load - 1
+    set energy  energy + energy_from_food
+  ]
+
+  if energy  >= farmers_energy [ set destination my_farm ]
 end
 
 to pay_taxes
-  move-towards my_house
+  if load > 0 [
+    set load load - 1
+    set tax_doubt tax_doubt - 1
+  ]
+
+  if tax_doubt = 0 or load = 0 [ set destination my_house ]
+end
+
+to rest_b
+  set load load - 1
+  set energy  energy + energy_from_food
+
+  if energy  >= bandits_energy [ set destination closest_farmer ]
+end
+
+to-report closest_farmer
+  report min-one-of farmers [distance myself]
 end
 
 to decrement_energy
-  if energy > 0 [
-      set energy energy - 1
-  ]
+  if energy > 0 [ set energy energy - 1 ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -245,7 +249,7 @@ farmers_num
 farmers_num
 0
 100
-32.0
+100.0
 1
 1
 NIL
@@ -260,7 +264,7 @@ bandits_num
 bandits_num
 0
 100
-6.0
+0.0
 1
 1
 NIL
@@ -275,7 +279,7 @@ farmers_energy
 farmers_energy
 0
 100
-63.0
+39.0
 1
 1
 NIL
@@ -290,7 +294,7 @@ bandits_energy
 bandits_energy
 0
 100
-50.0
+0.0
 1
 1
 NIL
@@ -320,7 +324,7 @@ bandits_max_load
 bandits_max_load
 0
 100
-50.0
+0.0
 1
 1
 NIL
@@ -335,7 +339,7 @@ energy_from_food
 energy_from_food
 0
 100
-10.0
+30.0
 1
 1
 NIL
@@ -349,9 +353,9 @@ SLIDER
 tax_rate
 tax_rate
 0
+100
+5.0
 1
-0.1
-0.01
 1
 NIL
 HORIZONTAL
