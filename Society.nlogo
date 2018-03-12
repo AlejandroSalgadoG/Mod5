@@ -53,20 +53,18 @@ to setup
     set destination my_farm
   ]
 
-;  crt 5 [
-;    setxy random-xcor random-ycor
-;    set shape "person soldier"
+;  create-soldiers soldiers_num[
 ;  ]
 
   create-bandits bandits_num [
-    setxy random-xcor random-ycor
     set color red
-    ;set shape "person lumberjack"
 
     set energy bandits_energy
     set load 0
 
     set my_house one-of houses
+
+    move-to my_house
     set destination closest_farmer
   ]
 end
@@ -124,15 +122,17 @@ end
 to work
   set load load + 1
 
+  if load = farmers_max_load [
+     ;set tax_doubt 5
+     set destination my_cityhall
+  ]
   if energy  = 0 [ set destination my_house ]
-  if load = farmers_max_load [ set tax_doubt 5
-                                                          set destination my_cityhall ]
 end
 
 to rest_f
   if load > 0 [
-    set load load - 1
-    set energy  energy + energy_from_food
+    set load load - min (list 1 load)
+    set energy  energy + energy_from_food * min (list 1 load)
   ]
 
   if energy  >= farmers_energy [ set destination my_farm ]
@@ -140,16 +140,17 @@ end
 
 to pay_taxes
   if load > 0 [
-    set load load - 1
-    set tax_doubt tax_doubt - 1
+    set load load - min (list 1 load)
+    ;set tax_doubt tax_doubt - 1
   ]
 
-  if tax_doubt = 0 or load = 0 [ set destination my_house ]
+  ;if tax_doubt = 0 or
+  if load = 0 [ set destination my_house ]
 end
 
 to rest_b
-  set load load - 1
-  set energy  energy + energy_from_food
+  set load load - min (list 1 load)
+  set energy  energy + energy_from_food * min (list 1 load)
 
   if energy  >= bandits_energy [ set destination closest_farmer ]
 end
