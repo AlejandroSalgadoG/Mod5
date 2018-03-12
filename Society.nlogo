@@ -46,12 +46,12 @@ to setup
     set load 0
 
     let house_id (who - population)
-
     set my_house house house_id
-    set my_farm one-of farms
-    set my_cityhall min-one-of cityhalls [distance myself]
-
     move-to my_house
+
+    set my_farm closest farms
+    set my_cityhall closest cityhalls
+
     set destination my_farm
   ]
 
@@ -74,15 +74,16 @@ to go
   ask farmers [
     set label load
 
+    if i_am_on my_cityhall [ pay_taxes ]
     if i_am_on my_farm [ work ]
     if i_am_on my_house [ rest_f ]
-    if i_am_on my_cityhall [ pay_taxes ]
 
     move_towards destination
     decrement_energy
   ]
 
   ask bandits [
+    show "Everything is alright"
     if i_am_on my_house [ rest_b ]
 
     if energy = 0 or load > 0 [
@@ -126,11 +127,10 @@ to work
   ;if energy  = 0 [ set destination my_house ]
 end
 
-to rest_f
-  let my_load load
+to rest_in [place my_load]
   let my_energy energy
 
-  ask my_house [
+  ask place [
       set inventory inventory + my_load
 
       if inventory > 0 [
@@ -139,12 +139,31 @@ to rest_f
       ]
   ]
 
-  set load 0
   set energy my_energy
+end
+
+to rest_f
+  rest_in my_house load
+
+  set load 0
 
   if energy  >= farmers_energy [ set destination my_farm ]
-  ;if energy = 0 [set breed bandits]
+  if energy = 0 [ become_bandit ]
   ;else depression
+end
+
+to become_bandit
+  set color red
+  set breed bandits
+  set energy bandits_energy + 1
+end
+
+to become_farmer
+  set color green
+  set breed farmers
+  set energy farmers_energy + 1
+  set my_farm closest farms
+  set my_cityhall closest cityhalls
 end
 
 to pay_taxes
@@ -157,10 +176,12 @@ to pay_taxes
 end
 
 to rest_b
-  set load load - min (list 1 load)
-  set energy  energy + energy_from_food * min (list 1 load)
+  rest_in my_house load
+
+  set load 0
 
   if energy  >= bandits_energy [ set destination closest farmers ]
+  if energy = 0 [ become_farmer ]
 end
 
 to-report closest [ agents ]
@@ -288,7 +309,7 @@ farmers_energy
 farmers_energy
 0
 100
-39.0
+15.0
 1
 1
 NIL
@@ -303,7 +324,7 @@ bandits_energy
 bandits_energy
 0
 100
-0.0
+15.0
 1
 1
 NIL
@@ -348,7 +369,7 @@ energy_from_food
 energy_from_food
 0
 100
-30.0
+6.0
 1
 1
 NIL
