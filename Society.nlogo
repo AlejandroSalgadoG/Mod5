@@ -1,4 +1,4 @@
-;set breed bandits ; change occupation
+globals [ population ]
 
 breed [ farmers farmer ]
 breed [ bandits bandit ]
@@ -8,35 +8,35 @@ breed [ houses house ]
 breed [ farms farm ]
 breed[ cityhalls cityhall ]
 
-farmers-own [ energy load my_house my_farm my_cityhall destination tax_doubt ]
-bandits-own [ energy load my_house destination]
+farmers-own [ energy load my_house my_farm my_cityhall destination ]
+bandits-own [ energy load my_house destination ]
 soldiers-own [ energy ]
 
-houses-own [inventory ]
+houses-own [ inventory ]
+cityhalls-own [ inventory ]
 
 to setup
   ca
   reset-ticks
 
-  create-cityhalls 1 [
+  set population (farmers_num + bandits_num + soldiers_num)
+
+  create-cityhalls cityhalls_num [
     setxy random-xcor random-ycor
     set shape "house colonial"
-    set size 2
+    set inventory 10
   ]
 
-  create-houses 1 [
-    setxy random-xcor random-ycor
-    set shape "house"
-    set size 1
-
-    set inventory 0
-  ]
-
-  create-farms 1 [
+  create-farms farms_num [
     setxy random-xcor random-ycor
     set shape "cow"
-    set size 1
   ]
+
+  create-houses population [
+        setxy random-xcor random-ycor
+        set shape "house"
+        set inventory 2
+    ]
 
   create-farmers farmers_num [
     set color green
@@ -45,16 +45,15 @@ to setup
     set energy farmers_energy
     set load 0
 
+    let house_id (who - population)
+
+    set my_house house house_id
     set my_farm one-of farms
-    set my_house one-of houses
     set my_cityhall min-one-of cityhalls [distance myself]
 
     move-to my_house
     set destination my_farm
   ]
-
-;  create-soldiers soldiers_num[
-;  ]
 
   create-bandits bandits_num [
     set color red
@@ -65,7 +64,7 @@ to setup
     set my_house one-of houses
 
     move-to my_house
-    set destination closest_farmer
+    set destination closest farmers
   ]
 end
 
@@ -74,6 +73,7 @@ to go
 
   ask farmers [
     set label load
+
     if i_am_on my_farm [ work ]
     if i_am_on my_house [ rest_f ]
     if i_am_on my_cityhall [ pay_taxes ]
@@ -103,7 +103,7 @@ end
 to move_towards [place]
   if not i_am_on place [
       face place
-      fd 1
+      fd min (list 1 (distance place) )
   ]
 end
 
@@ -122,41 +122,49 @@ end
 to work
   set load load + 1
 
-  if load = farmers_max_load [
-     ;set tax_doubt 5
-     set destination my_cityhall
-  ]
-  if energy  = 0 [ set destination my_house ]
+  if load = farmers_max_load or energy = 0 [ set destination my_cityhall ]
+  ;if energy  = 0 [ set destination my_house ]
 end
 
 to rest_f
-  if load > 0 [
-    set load load - min (list 1 load)
-    set energy  energy + energy_from_food * min (list 1 load)
+  let my_load load
+  let my_energy energy
+
+  ask my_house [
+      set inventory inventory + my_load
+
+      if inventory > 0 [
+          set my_energy  my_energy + energy_from_food * min (list 1 inventory)
+          set inventory inventory - min (list 1 inventory)
+      ]
   ]
 
+  set load 0
+  set energy my_energy
+
   if energy  >= farmers_energy [ set destination my_farm ]
+  ;if energy = 0 [set breed bandits]
+  ;else depression
 end
 
 to pay_taxes
-  if load > 0 [
-    set load load - min (list 1 load)
-    ;set tax_doubt tax_doubt - 1
-  ]
+  let my_load load
 
-  ;if tax_doubt = 0 or
-  if load = 0 [ set destination my_house ]
+  ask my_cityhall [ set inventory inventory + min (list my_load tax_rate) ]
+
+  set load load - min (list load tax_rate)
+  set destination my_house
 end
 
 to rest_b
   set load load - min (list 1 load)
   set energy  energy + energy_from_food * min (list 1 load)
 
-  if energy  >= bandits_energy [ set destination closest_farmer ]
+  if energy  >= bandits_energy [ set destination closest farmers ]
 end
 
-to-report closest_farmer
-  report min-one-of farmers [distance myself]
+to-report closest [ agents ]
+  report min-one-of agents [distance myself]
 end
 
 to decrement_energy
@@ -166,11 +174,11 @@ end
 GRAPHICS-WINDOW
 616
 10
-1053
-448
+1119
+514
 -1
 -1
-13.0
+15.0
 1
 10
 1
@@ -250,7 +258,7 @@ farmers_num
 farmers_num
 0
 100
-100.0
+10.0
 1
 1
 NIL
@@ -287,10 +295,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-211
-134
-383
-167
+213
+132
+385
+165
 bandits_energy
 bandits_energy
 0
@@ -302,25 +310,25 @@ NIL
 HORIZONTAL
 
 SLIDER
-408
-79
-580
-112
+405
+81
+577
+114
 farmers_max_load
 farmers_max_load
 0
 100
-10.0
+9.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-408
-134
-580
-167
+407
+132
+579
+165
 bandits_max_load
 bandits_max_load
 0
@@ -332,10 +340,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-19
-201
-191
-234
+23
+317
+195
+350
 energy_from_food
 energy_from_food
 0
@@ -347,15 +355,75 @@ NIL
 HORIZONTAL
 
 SLIDER
-294
-215
-466
-248
+217
+318
+389
+351
 tax_rate
 tax_rate
 0
+10
+2.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+19
+183
+191
+216
+soldiers_num
+soldiers_num
+0
 100
-5.0
+0.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+213
+185
+385
+218
+soldier_energy
+soldier_energy
+0
+100
+50.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+24
+372
+196
+405
+cityhalls_num
+cityhalls_num
+0
+100
+1.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+215
+372
+387
+405
+farms_num
+farms_num
+0
+100
+1.0
 1
 1
 NIL
