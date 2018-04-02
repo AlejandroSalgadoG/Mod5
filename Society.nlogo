@@ -1,4 +1,4 @@
-globals [ population ]
+globals [ population farmer_color bandit_color soldier_color]
 
 breed [ farmers farmer ]
 breed [ bandits bandit ]
@@ -9,8 +9,8 @@ breed [ farms farm ]
 breed[ cityhalls cityhall ]
 
 farmers-own [ energy load my_house my_farm my_cityhall destination ]
+soldiers-own [ energy load my_house my_cityhall destination ]
 bandits-own [ energy load my_house destination ]
-soldiers-own [ energy ]
 
 houses-own [ inventory ]
 cityhalls-own [ inventory ]
@@ -21,25 +21,33 @@ to setup
 
   set population (farmers_num + bandits_num + soldiers_num)
 
+  set farmer_color white
+  set bandit_color red
+  set soldier_color green
+
   create-cityhalls cityhalls_num [
     setxy random-xcor random-ycor
     set shape "house colonial"
     set inventory 10
+
+    set color orange
   ]
 
   create-farms farms_num [
     setxy random-xcor random-ycor
     set shape "cow"
+
+    set color brown
   ]
 
   create-houses population [
-        setxy random-xcor random-ycor
-        set shape "house"
-        set inventory 2
-    ]
+    setxy random-xcor random-ycor
+    set shape "house"
+    set inventory 2
+  ]
 
   create-farmers farmers_num [
-    set color green
+    set color farmer_color
     ;set shape "person farmer"
 
     set energy farmers_energy
@@ -47,6 +55,7 @@ to setup
 
     let house_id (who - population)
     set my_house house house_id
+    ask my_house [set color farmer_color]
     move-to my_house
 
     set my_farm closest farms
@@ -56,15 +65,33 @@ to setup
   ]
 
   create-bandits bandits_num [
-    set color red
+    set color bandit_color
 
     set energy bandits_energy
     set load 0
 
-    set my_house one-of houses
-
+    let house_id (who - population)
+    set my_house house house_id
+    ask my_house [ set color bandit_color ]
     move-to my_house
+
     set destination closest farmers
+  ]
+
+  create-soldiers soldiers_num [
+    set color soldier_color
+    ;set shape "wolf"
+
+    set energy soldiers_energy
+
+    let house_id (who - population)
+    set my_house house house_id
+    ask my_house [set color soldier_color]
+    move-to my_house
+
+    set my_cityhall closest cityhalls
+
+    set destination closest bandits
   ]
 end
 
@@ -83,14 +110,14 @@ to go
   ]
 
   ask bandits [
-    show "Everything is alright"
-    if i_am_on my_house [ rest_b ]
+    ifelse i_am_on my_house [ rest_b ] [ assault ]
 
-    if energy = 0 or load > 0 [
-      set destination my_house
-    ]
+    move_towards destination
+    decrement_energy
+  ]
 
-    assault
+  ask soldiers [
+    ifelse i_am_on my_cityhall [ rest_s ] [ chase ]
 
     move_towards destination
     decrement_energy
@@ -102,9 +129,9 @@ to-report i_am_on [place]
 end
 
 to move_towards [place]
-  if not i_am_on place [
-      face place
-      fd min (list 1 (distance place) )
+  if place != nobody and not i_am_on place [
+    face place
+    fd min (list 1 (distance place) )
   ]
 end
 
@@ -118,17 +145,34 @@ to assault
     ]
     set load (load + temp)
   ]
+
+  if energy = 0 or load > 0 [ set destination my_house ]
+end
+
+to chase
+  let criminal one-of bandits-here
+  if criminal != nobody [
+    let temp 0
+    ask criminal[
+      set temp load
+      set load 0
+      become_farmer
+    ]
+    set load (load + temp)
+  ]
+
+  ifelse energy = 0 or load > 0 [ set destination my_cityhall ] [ set destination closest bandits ]
 end
 
 to work
   set load load + 1
 
   if load = farmers_max_load or energy = 0 [ set destination my_cityhall ]
-  ;if energy  = 0 [ set destination my_house ]
 end
 
-to rest_in [place my_load]
+to rest_in [place]
   let my_energy energy
+  let my_load load
 
   ask place [
       set inventory inventory + my_load
@@ -140,30 +184,60 @@ to rest_in [place my_load]
   ]
 
   set energy my_energy
+  set load 0
 end
 
 to rest_f
-  rest_in my_house load
+  rest_in my_house
 
-  set load 0
-
-  if energy  >= farmers_energy [ set destination my_farm ]
+  set destination my_farm
   if energy = 0 [ become_bandit ]
-  ;else depression
+end
+
+to rest_b
+  rest_in my_house
+
+  set destination closest farmers
+  if energy = 0 [ become_farmer ]
+end
+
+to rest_s
+  rest_in my_cityhall
+
+  set destination closest bandits
+  if energy = 0 [ become_farmer ]
 end
 
 to become_bandit
-  set color red
+  set color bandit_color
   set breed bandits
   set energy bandits_energy + 1
+
+  ask my_house [ set color bandit_color ]
+
+  set destination my_house
+end
+
+to become_soldier
+  set color soldier_color
+  set breed soldiers
+  set energy soldiers_energy + 1
+
+  ask my_house [ set color soldier_color ]
+
+  set destination my_cityhall
 end
 
 to become_farmer
-  set color green
+  set color farmer_color
   set breed farmers
   set energy farmers_energy + 1
-  set my_farm closest farms
-  set my_cityhall closest cityhalls
+
+  ask my_house [ set color farmer_color ]
+  set my_farm closest_from_home farms
+  set my_cityhall closest_from_home cityhalls
+
+  set destination my_house
 end
 
 to pay_taxes
@@ -175,17 +249,13 @@ to pay_taxes
   set destination my_house
 end
 
-to rest_b
-  rest_in my_house load
-
-  set load 0
-
-  if energy  >= bandits_energy [ set destination closest farmers ]
-  if energy = 0 [ become_farmer ]
-end
-
 to-report closest [ agents ]
   report min-one-of agents [distance myself]
+end
+
+to-report closest_from_home [ agents ]
+  let my_home my_house
+  report min-one-of agents [distance my_home]
 end
 
 to decrement_energy
@@ -279,7 +349,7 @@ farmers_num
 farmers_num
 0
 100
-10.0
+0.0
 1
 1
 NIL
@@ -294,7 +364,7 @@ bandits_num
 bandits_num
 0
 100
-0.0
+1.0
 1
 1
 NIL
@@ -399,7 +469,7 @@ soldiers_num
 soldiers_num
 0
 100
-0.0
+2.0
 1
 1
 NIL
@@ -410,11 +480,11 @@ SLIDER
 185
 385
 218
-soldier_energy
-soldier_energy
+soldiers_energy
+soldiers_energy
 0
 100
-50.0
+15.0
 1
 1
 NIL
