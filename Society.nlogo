@@ -173,7 +173,7 @@ to chase
     set load (load + temp)
   ]
 
-  ifelse energy = 0 or load > 0 [ set destination my_cityhall ] [ set destination closest bandits ]
+  ifelse energy = 0 or load > soldiers_max_load [ set destination my_cityhall ] [ set destination closest bandits ]
 end
 
 to work
@@ -273,7 +273,7 @@ to-report closest_from_home [ agents ]
 end
 
 to decrement_energy
-  if energy > 0 [ set energy energy - 1 ]
+  ifelse energy > 0 [ set energy energy - 1 ][ set load max (list (load - 1 / energy_from_food) 0)]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -408,7 +408,7 @@ bandits_energy
 bandits_energy
 0
 100
-40.0
+30.0
 1
 1
 NIL
@@ -423,7 +423,7 @@ farmers_max_load
 farmers_max_load
 0
 100
-9.0
+10.0
 1
 1
 NIL
@@ -438,7 +438,7 @@ bandits_max_load
 bandits_max_load
 0
 100
-18.0
+10.0
 1
 1
 NIL
@@ -453,7 +453,7 @@ energy_from_food
 energy_from_food
 0
 10
-5.0
+4.0
 1
 1
 NIL
@@ -498,7 +498,7 @@ soldiers_energy
 soldiers_energy
 0
 100
-20.0
+30.0
 1
 1
 NIL
@@ -550,15 +550,30 @@ NIL
 HORIZONTAL
 
 SLIDER
-411
-191
-619
-224
+595
+81
+760
+114
 bandits_vision_range
 bandits_vision_range
 0
 10
 4.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+406
+188
+578
+221
+soldiers_max_load
+soldiers_max_load
+0
+100
+10.0
 1
 1
 NIL
