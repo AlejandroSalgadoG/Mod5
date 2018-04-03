@@ -170,16 +170,17 @@ to work
   if load = farmers_max_load or energy = 0 [ set destination my_cityhall ]
 end
 
-to rest_in [place]
+to rest_in [place max_energy]
   let my_energy energy
+  let old_energy energy
   let my_load load
 
   ask place [
       set inventory inventory + my_load
 
       if inventory > 0 [
-          set my_energy  my_energy + energy_from_food * min (list 1 inventory)
-          set inventory inventory - min (list 1 inventory)
+          set my_energy min (list max_energy (inventory * energy_from_food))
+          set inventory inventory - (my_energy - old_energy) / energy_from_food
       ]
   ]
 
@@ -188,21 +189,23 @@ to rest_in [place]
 end
 
 to rest_f
-  rest_in my_house
+  rest_in my_house farmers_energy
 
   set destination my_farm
-  if energy = 0 [ become_bandit ]
+  if energy = 0 [
+    ifelse random-float 1 < government_support [ become_soldier ] [ become_bandit ]
+  ]
 end
 
 to rest_b
-  rest_in my_house
+  rest_in my_house bandits_energy
 
   set destination closest farmers
   if energy = 0 [ become_farmer ]
 end
 
 to rest_s
-  rest_in my_cityhall
+  rest_in my_cityhall soldiers_energy
 
   set destination closest bandits
   if energy = 0 [ become_farmer ]
@@ -225,7 +228,7 @@ to become_soldier
 
   ask my_house [ set color soldier_color ]
 
-  set destination my_cityhall
+  move-to my_cityhall
 end
 
 to become_farmer
@@ -263,10 +266,10 @@ to decrement_energy
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-616
-10
-1119
-514
+760
+24
+1263
+528
 -1
 -1
 15.0
@@ -349,7 +352,7 @@ farmers_num
 farmers_num
 0
 100
-0.0
+10.0
 1
 1
 NIL
@@ -364,7 +367,7 @@ bandits_num
 bandits_num
 0
 100
-1.0
+3.0
 1
 1
 NIL
@@ -379,7 +382,7 @@ farmers_energy
 farmers_energy
 0
 100
-15.0
+20.0
 1
 1
 NIL
@@ -394,7 +397,7 @@ bandits_energy
 bandits_energy
 0
 100
-15.0
+20.0
 1
 1
 NIL
@@ -424,7 +427,7 @@ bandits_max_load
 bandits_max_load
 0
 100
-0.0
+18.0
 1
 1
 NIL
@@ -438,8 +441,8 @@ SLIDER
 energy_from_food
 energy_from_food
 0
-100
-6.0
+10
+5.0
 1
 1
 NIL
@@ -469,7 +472,7 @@ soldiers_num
 soldiers_num
 0
 100
-2.0
+1.0
 1
 1
 NIL
@@ -484,7 +487,7 @@ soldiers_energy
 soldiers_energy
 0
 100
-15.0
+20.0
 1
 1
 NIL
@@ -516,6 +519,21 @@ farms_num
 100
 1.0
 1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+412
+319
+618
+352
+government_support
+government_support
+0
+1
+0.2
+0.1
 1
 NIL
 HORIZONTAL
