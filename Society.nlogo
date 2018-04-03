@@ -110,18 +110,30 @@ to go
   ]
 
   ask bandits [
+    set label load
+
+    move_away_from (closest soldiers) bandits_vision_range
+
     ifelse i_am_on my_house [ rest_b ] [ assault ]
 
-    move_towards destination
     decrement_energy
   ]
 
   ask soldiers [
+    move_towards destination
+
     ifelse i_am_on my_cityhall [ rest_s ] [ chase ]
 
-    move_towards destination
     decrement_energy
   ]
+end
+
+to move_away_from [threat vision_range]
+  ifelse threat != nobody and distance threat <= vision_range[
+    face threat
+    rt 180
+    fd 1
+  ][move_towards destination]
 end
 
 to-report i_am_on [place]
@@ -146,7 +158,7 @@ to assault
     set load (load + temp)
   ]
 
-  if energy = 0 or load > 0 [ set destination my_house ]
+  if energy = 0 or load > bandits_max_load [ set destination my_house ]
 end
 
 to chase
@@ -165,9 +177,8 @@ to chase
 end
 
 to work
-  set load load + 1
-
-  if load = farmers_max_load or energy = 0 [ set destination my_cityhall ]
+  set load farmers_max_load
+  set destination my_cityhall
 end
 
 to rest_in [place max_energy]
@@ -397,7 +408,7 @@ bandits_energy
 bandits_energy
 0
 100
-20.0
+40.0
 1
 1
 NIL
@@ -534,6 +545,21 @@ government_support
 1
 0.2
 0.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+411
+191
+619
+224
+bandits_vision_range
+bandits_vision_range
+0
+10
+4.0
+1
 1
 NIL
 HORIZONTAL
