@@ -132,7 +132,7 @@ to move_away_from [threat vision_range]
   ifelse threat != nobody and distance threat <= vision_range[
     face threat
     rt 180
-    fd 1
+    fd distance_to_move
   ][move_towards destination]
 end
 
@@ -140,10 +140,14 @@ to-report i_am_on [place]
   report member? place turtles-here
 end
 
+to-report distance_to_move
+  ifelse energy > 0 [report 1] [report 0.7]
+end
+
 to move_towards [place]
   if place != nobody and not i_am_on place [
     face place
-    fd min (list 1 (distance place) )
+    fd min (list distance_to_move (distance place) )
   ]
 end
 
