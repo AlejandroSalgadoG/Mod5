@@ -8,9 +8,9 @@ breed [ houses house ]
 breed [ farms farm ]
 breed[ cityhalls cityhall ]
 
-farmers-own [ energy load my_house my_farm my_cityhall destination ]
-soldiers-own [ energy load my_house my_cityhall destination ]
-bandits-own [ energy load my_house destination ]
+farmers-own [ energy load my_house my_farm my_cityhall destination vision_range ]
+soldiers-own [ energy load my_house my_cityhall destination vision_range ]
+bandits-own [ energy load my_house destination vision_range ]
 
 houses-own [ inventory ]
 cityhalls-own [ inventory ]
@@ -51,6 +51,7 @@ to setup
     ;set shape "person farmer"
 
     set energy farmers_energy
+    set vision_range farmers_vision_range
     set load 0
 
     let house_id (who - population)
@@ -68,6 +69,7 @@ to setup
     set color bandit_color
 
     set energy bandits_energy
+    set vision_range bandits_vision_range
     set load 0
 
     let house_id (who - population)
@@ -83,6 +85,7 @@ to setup
     ;set shape "wolf"
 
     set energy soldiers_energy
+    set vision_range soldiers_vision_range
 
     let house_id (who - population)
     set my_house house house_id
@@ -98,12 +101,18 @@ end
 to go
   tick
 
+  ask cityhalls[
+    set label inventory
+  ]
+  ask houses [
+    set label inventory
+  ]
   ask farmers [
     set label load
 
-    if i_am_on my_cityhall [ pay_taxes ]
-    if i_am_on my_farm [ work ]
-    if i_am_on my_house [ rest_f ]
+    if destination = my_cityhall and i_am_on my_cityhall[ pay_taxes ]
+    if destination = my_farm and i_am_on my_farm [ work ]
+    if destination = my_house and i_am_on my_house [ rest_f ]
 
     move_towards destination
     decrement_energy
@@ -112,7 +121,7 @@ to go
   ask bandits [
     set label load
 
-    move_away_from (closest soldiers) bandits_vision_range
+    move_away_from closest soldiers
 
     ifelse i_am_on my_house [ rest_b ] [ assault ]
 
@@ -120,15 +129,17 @@ to go
   ]
 
   ask soldiers [
+    set label load
+
     move_towards destination
 
-    ifelse i_am_on my_cityhall [ rest_s ] [ chase ]
+    ifelse i_am_on my_cityhall [ rest_s ] [ seize ]
 
     decrement_energy
   ]
 end
 
-to move_away_from [threat vision_range]
+to move_away_from [ threat ]
   ifelse threat != nobody and distance threat <= vision_range[
     face threat
     rt 180
@@ -141,7 +152,7 @@ to-report i_am_on [place]
 end
 
 to-report distance_to_move
-  ifelse energy > 0 [report 1] [report 0.7]
+  ifelse energy > 0 and load > 0 [report 1] [report 0.7]
 end
 
 to move_towards [place]
@@ -153,28 +164,31 @@ end
 
 to assault
   let victim one-of farmers-here
+  let bandit_load load
   if victim != nobody [
-    let temp 0
+    let loot 0
     ask victim[
-      set temp load
-      set load 0
+      set loot min (list load (bandits_max_load - bandit_load))
+      set load (load - loot)
     ]
-    set load (load + temp)
+    ;ask patch-here[set pcolor scale-color red (pcolor + 1) 0 10]
+    set load (load + loot)
   ]
-
+  set destination closest (farmers with [load != 0])
   if energy = 0 or load > bandits_max_load [ set destination my_house ]
 end
 
-to chase
+to seize
   let criminal one-of bandits-here
+  let soldier_load load
   if criminal != nobody [
-    let temp 0
+    let loot 0
     ask criminal[
-      set temp load
-      set load 0
+      set loot min (list load (soldiers_max_load - soldier_load))
+      set load (load + loot)
       become_farmer
     ]
-    set load (load + temp)
+    set load (load + loot)
   ]
 
   ifelse energy = 0 or load > soldiers_max_load [ set destination my_cityhall ] [ set destination closest bandits ]
@@ -281,13 +295,13 @@ to decrement_energy
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-760
-24
-1263
-528
+840
+36
+1572
+769
 -1
 -1
-15.0
+21.94
 1
 10
 1
@@ -366,8 +380,8 @@ SLIDER
 farmers_num
 farmers_num
 0
-100
-10.0
+50
+7.0
 1
 1
 NIL
@@ -381,8 +395,8 @@ SLIDER
 bandits_num
 bandits_num
 0
-100
-3.0
+50
+7.0
 1
 1
 NIL
@@ -397,7 +411,7 @@ farmers_energy
 farmers_energy
 0
 100
-20.0
+40.0
 1
 1
 NIL
@@ -412,7 +426,7 @@ bandits_energy
 bandits_energy
 0
 100
-30.0
+40.0
 1
 1
 NIL
@@ -427,7 +441,7 @@ farmers_max_load
 farmers_max_load
 0
 100
-10.0
+20.0
 1
 1
 NIL
@@ -442,7 +456,7 @@ bandits_max_load
 bandits_max_load
 0
 100
-10.0
+30.0
 1
 1
 NIL
@@ -457,7 +471,7 @@ energy_from_food
 energy_from_food
 0
 10
-4.0
+8.0
 1
 1
 NIL
@@ -472,7 +486,7 @@ tax_rate
 tax_rate
 0
 10
-2.0
+3.0
 1
 1
 NIL
@@ -486,8 +500,8 @@ SLIDER
 soldiers_num
 soldiers_num
 0
-100
-1.0
+50
+5.0
 1
 1
 NIL
@@ -502,7 +516,7 @@ soldiers_energy
 soldiers_energy
 0
 100
-30.0
+20.0
 1
 1
 NIL
@@ -516,8 +530,8 @@ SLIDER
 cityhalls_num
 cityhalls_num
 0
-100
-1.0
+10
+2.0
 1
 1
 NIL
@@ -531,8 +545,8 @@ SLIDER
 farms_num
 farms_num
 0
-100
-1.0
+10
+2.0
 1
 1
 NIL
@@ -577,7 +591,37 @@ soldiers_max_load
 soldiers_max_load
 0
 100
-10.0
+30.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+596
+134
+765
+167
+soldiers_vision_range
+soldiers_vision_range
+0
+10
+3.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+614
+186
+823
+219
+farmers_vision_range
+farmers_vision_range
+0
+10
+5.0
 1
 1
 NIL
