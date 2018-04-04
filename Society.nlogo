@@ -8,9 +8,11 @@ breed [ houses house ]
 breed [ farms farm ]
 breed[ cityhalls cityhall ]
 
-farmers-own [ energy load my_house my_farm my_cityhall destination vision_range ]
-soldiers-own [ energy load my_house my_cityhall destination vision_range ]
-bandits-own [ energy load my_house destination vision_range ]
+patches-own [ danger ]
+
+farmers-own [ energy load my_house my_farm my_cityhall destination vision_range max_energy]
+soldiers-own [ energy load my_house my_cityhall destination vision_range max_energy]
+bandits-own [ energy load my_house destination vision_range max_energy]
 
 houses-own [ inventory ]
 cityhalls-own [ inventory ]
@@ -24,6 +26,10 @@ to setup
   set farmer_color white
   set bandit_color red
   set soldier_color green
+
+  ask patches[
+   set danger black
+  ]
 
   create-cityhalls cityhalls_num [
     setxy random-xcor random-ycor
@@ -47,6 +53,7 @@ to setup
   ]
 
   create-farmers farmers_num [
+    set max_energy farmers_energy
     set color farmer_color
     ;set shape "person farmer"
 
@@ -66,6 +73,7 @@ to setup
   ]
 
   create-bandits bandits_num [
+    set max_energy bandits_energy
     set color bandit_color
 
     set energy bandits_energy
@@ -81,8 +89,8 @@ to setup
   ]
 
   create-soldiers soldiers_num [
+    set max_energy soldiers_energy
     set color soldier_color
-    ;set shape "wolf"
 
     set energy soldiers_energy
     set vision_range soldiers_vision_range
@@ -137,6 +145,8 @@ to go
 
     decrement_energy
   ]
+
+  ifelse see_danger_zones [ ask patches [ set pcolor danger ]] [ ask patches [set pcolor black] ]
 end
 
 to move_away_from [ threat ]
@@ -152,7 +162,7 @@ to-report i_am_on [place]
 end
 
 to-report distance_to_move
-  ifelse energy > 0 and load > 0 [report 1] [report 0.7]
+  report 1;(energy / max_energy) / 2 + 0.5
 end
 
 to move_towards [place]
@@ -171,11 +181,15 @@ to assault
       set loot min (list load (bandits_max_load - bandit_load))
       set load (load - loot)
     ]
-    ;ask patch-here[set pcolor scale-color red (pcolor + 1) 0 10]
+    if loot != 0 [ ask patch-here [ increment_danger ] ]
     set load (load + loot)
   ]
   set destination closest (farmers with [load != 0])
   if energy = 0 or load > bandits_max_load [ set destination my_house ]
+end
+
+to increment_danger
+  set danger scale-color red (min (list (danger + 1) 15)) 0 30
 end
 
 to seize
@@ -199,16 +213,16 @@ to work
   set destination my_cityhall
 end
 
-to rest_in [place max_energy]
+to rest_in [place]
   let my_energy energy
   let old_energy energy
   let my_load load
-
+  let mmax_energy max_energy
   ask place [
       set inventory inventory + my_load
 
       if inventory > 0 [
-          set my_energy min (list max_energy (inventory * energy_from_food))
+          set my_energy min (list mmax_energy (inventory * energy_from_food))
           set inventory inventory - (my_energy - old_energy) / energy_from_food
       ]
   ]
@@ -218,7 +232,7 @@ to rest_in [place max_energy]
 end
 
 to rest_f
-  rest_in my_house farmers_energy
+  rest_in my_house
 
   set destination my_farm
   if energy = 0 [
@@ -227,14 +241,14 @@ to rest_f
 end
 
 to rest_b
-  rest_in my_house bandits_energy
+  rest_in my_house
 
   set destination closest farmers
   if energy = 0 [ become_farmer ]
 end
 
 to rest_s
-  rest_in my_cityhall soldiers_energy
+  rest_in my_cityhall
 
   set destination closest bandits
   if energy = 0 [ become_farmer ]
@@ -381,7 +395,7 @@ farmers_num
 farmers_num
 0
 50
-7.0
+20.0
 1
 1
 NIL
@@ -471,7 +485,7 @@ energy_from_food
 energy_from_food
 0
 10
-8.0
+4.0
 1
 1
 NIL
@@ -486,7 +500,7 @@ tax_rate
 tax_rate
 0
 10
-3.0
+4.0
 1
 1
 NIL
@@ -501,7 +515,7 @@ soldiers_num
 soldiers_num
 0
 50
-5.0
+0.0
 1
 1
 NIL
@@ -516,7 +530,7 @@ soldiers_energy
 soldiers_energy
 0
 100
-20.0
+25.0
 1
 1
 NIL
@@ -613,10 +627,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-614
-186
-823
-219
+596
+188
+767
+221
 farmers_vision_range
 farmers_vision_range
 0
@@ -626,6 +640,17 @@ farmers_vision_range
 1
 NIL
 HORIZONTAL
+
+SWITCH
+20
+248
+210
+281
+see_danger_zones
+see_danger_zones
+1
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?
