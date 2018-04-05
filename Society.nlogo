@@ -58,7 +58,7 @@ to setup
     ;set shape "person farmer"
 
     set energy farmers_energy
-    set vision_range farmers_vision_range
+    set vision_range 4
     set load 0
 
     let house_id (who - population)
@@ -77,7 +77,7 @@ to setup
     set color bandit_color
 
     set energy bandits_energy
-    set vision_range bandits_vision_range
+    set vision_range 4
     set load 0
 
     let house_id (who - population)
@@ -93,7 +93,7 @@ to setup
     set color soldier_color
 
     set energy soldiers_energy
-    set vision_range soldiers_vision_range
+    set vision_range 4
 
     let house_id (who - population)
     set my_house house house_id
@@ -582,21 +582,6 @@ NIL
 HORIZONTAL
 
 SLIDER
-595
-81
-760
-114
-bandits_vision_range
-bandits_vision_range
-0
-10
-4.0
-1
-1
-NIL
-HORIZONTAL
-
-SLIDER
 406
 188
 578
@@ -611,36 +596,6 @@ soldiers_max_load
 NIL
 HORIZONTAL
 
-SLIDER
-596
-134
-765
-167
-soldiers_vision_range
-soldiers_vision_range
-0
-10
-3.0
-1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-596
-188
-767
-221
-farmers_vision_range
-farmers_vision_range
-0
-10
-5.0
-1
-1
-NIL
-HORIZONTAL
-
 SWITCH
 20
 248
@@ -648,15 +603,15 @@ SWITCH
 281
 see_danger_zones
 see_danger_zones
-0
+1
 1
 -1000
 
 PLOT
-323
-508
-824
-773
+161
+467
+662
+732
 Population vs Time
 Time
 Population
@@ -673,10 +628,10 @@ PENS
 "bandits" 1.0 0 -2674135 true "" "plot count bandits"
 
 MONITOR
-143
-504
-247
-549
+17
+531
+121
+576
 Farmers wealth 
 sum [ inventory ] of houses with [ color = white]
 2
@@ -684,10 +639,10 @@ sum [ inventory ] of houses with [ color = white]
 11
 
 MONITOR
-144
-567
-241
-612
+18
+594
+115
+639
 Bandits wealth
 sum [ inventory ] of houses with [ color = red]
 2
@@ -695,10 +650,10 @@ sum [ inventory ] of houses with [ color = red]
 11
 
 MONITOR
-146
-633
-243
-678
+20
+660
+117
+705
 Soldiers wralth
 sum [ inventory ] of cityhalls
 2
