@@ -1,5 +1,9 @@
 entrega1.pdf:  entrega1.tex
 	pdflatex entrega1.tex
+	bibtex entrega1
+	pdflatex entrega1.tex
+	pdflatex entrega1.tex
+	pdflatex entrega1.tex
 
 clean:
 	rm -f entrega1.pdf
