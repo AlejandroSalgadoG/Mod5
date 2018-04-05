@@ -648,9 +648,62 @@ SWITCH
 281
 see_danger_zones
 see_danger_zones
-1
+0
 1
 -1000
+
+PLOT
+323
+508
+824
+773
+Population vs Time
+Time
+Population
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"farmers" 1.0 0 -8630108 true "" "plot count farmers"
+"soldiers" 1.0 0 -15575016 true "" "plot count soldiers"
+"bandits" 1.0 0 -2674135 true "" "plot count bandits"
+
+MONITOR
+143
+504
+247
+549
+Farmers wealth 
+sum [ inventory ] of houses with [ color = white]
+2
+1
+11
+
+MONITOR
+144
+567
+241
+612
+Bandits wealth
+sum [ inventory ] of houses with [ color = red]
+2
+1
+11
+
+MONITOR
+146
+633
+243
+678
+Soldiers wralth
+sum [ inventory ] of cityhalls
+2
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
