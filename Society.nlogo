@@ -652,9 +652,9 @@ sum [ inventory ] of houses with [ color = red]
 MONITOR
 20
 660
-117
+134
 705
-Soldiers wralth
+Soldiers wealth
 sum [ inventory ] of cityhalls
 2
 1
