@@ -1,4 +1,4 @@
-entrega1.pdf:  entrega1.tex
+entrega1.pdf:  entrega1.tex entrega1.bib
 	pdflatex entrega1.tex
 	bibtex entrega1
 	pdflatex entrega1.tex

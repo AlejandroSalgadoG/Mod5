@@ -55,17 +55,34 @@ Universidad EAFIT\\
 \maketitle
 
 \section*{ABSTRACT}
-This is the abstract
 
-\section{INTRODUCTION}
+This document describes the implementation of an artificial society model, which members are
+farmers that represent the productive class, bandits which represents the delinquency
+and soldiers that represents the public control. Delincuency is one of the main probles that
+societies face nowadays, one the main reasons of this is the burden that it represents in the
+economy and the effect that has in the life quality of the rest of the population. In this work
+we present an implementation of an agent based model that aimns to simulate a simplified version
+of a society and their interactions, taking as base point the ideas proposed in some articles of
+systems dynamics. As implementation tool we use the NetLogo software \cite{netlogo}.
 
-This is the introduction
+\section{Generalities}
 
-\section{Purpose}
+This model is the representation of a simplified society in which three types of building define
+the infractucture necessary for the interactions that occurs between the social groups. In this model
+the economy is based on a single type of resource which represents all commodities,
+this resorces are proced by farmers in the first type of building named farms, this buildings
+are assume as an infite source of income. This resources are also used as currency to pay taxes
+in the second type of building, named city hall, this building reseprent the government institutions
+and store the supplys that are used to sustain soldiers, which are in charge of seeking for the
+well being of the farmers by keeping bandit population at bay. The last building type, named houses,
+are used by farmers and bandits to store the spare resources that they earn either by gathering them
+in a farm, in the case of farmers, or stealing, in the case of bandits.
 
-The purpose of the model is to nalyse the behaviour of an artificial society
-populated by bandits, farmers and soldiers basedon policies that are taken as
-parameters to the model.
+\subsection{Purpose}
+
+The purpose of the model is to analyse how delincuency affects the normal development of a socity,
+from the effect that has in the workforce and how reactions, like incrementing the public force
+angets, emerge as responce to protect citizens from criminality.
 
 \section{Entities, state variables and scales}
 
