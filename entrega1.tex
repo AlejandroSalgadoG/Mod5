@@ -127,31 +127,35 @@ reactions, like incrementing the public force angets, emerge as responce to
 protect citizens from criminality.
 
 \subsubsection{Entities, state variables and scales}
-
 \noindent \textbf{Entities}
 
 \begin{itemize}
+    \item Farms: Provides an endless flux of resources necessary for the population to subsist.
+    \item Houses: Serves as an storage for the spare resources an indivial has after using a portion
+          of those to meet its needs. If a given individual doesn't carry enought resources
+          to do so they can use the ones they've previously stored in their house.
+    \item City Hall: It stores the resources that farmers pay as taxes and also the ones soldiers
+          seize from bandits. Soldiers can use the funds in the city hall to sustain themselves.
+    \item Farmers: They gather resources from farms and pay a certain amount of those resources in the
+          city hall as a way of paying soldiers for their protection.
     \item Bandits: Steal resources from farmers to sustain themselves while trying to avoid soldiers.
-    \item Farmers: Gather food to sustain themselves and the soldiers by paying taxes.
-    \item Soldiers: Invest resources in the search of bandits to cpture.
-    \item Buildings: Store agent's resources for latter consumption.
+    \item Soldiers: Pursue bandits in order to recover the funds they've stolen and reintegrate them
+          into society a farmers.
 \end{itemize}
 
 \noindent \textbf{State variables}
 
-Human agents
+\noindent The common atributes farmers, bandits and soldiers have are:
 
 \begin{itemize}
-    \item Energy
-    \item Capacity
-    \item Occupation
+    \item Energy: This serves as a way of telling of how much time an agent have before it needs to
+          eat and thus return to its home or in the case or soldiers, city hall.
+    \item Load: It reprecents the quantity of resources a given agent is carrying with itself at the
+          moment
 \end{itemize}
 
-Buildings
-
-\begin{itemize}
-    \item Storage
-\end{itemize}
+\noindent Houses and City Halls share a common atribute named inventory which is the amount of
+resources it is storing at the moment.\hfill\break
 
 \noindent \textbf{Scales}
 
@@ -163,15 +167,30 @@ Buildings
 \subsubsection{Process overview and scheduling}
 
 \begin{itemize}
-    \item move
-    \item collect
-    \item switch-occupation
+    \item Move
+    \item Work
+    \item Pay-taxes
+    \item Steal
+    \item Seize
+    \item Rest
+    \item Switch-occupation
 \end{itemize}
 
-On each tick all the agents either move or collect depending on the pathc that
-they are and the energy available, then if the conditions are not favorable for
-the agent then, based on a fixed probability, they choose to continue in their
-current occupation or switch to another one.
+On each tick all agents will lose 1 energy and will move to their current objective, if they have 0
+energy then they will start consuming the resources they're carrying at the moment to supply for
+their lack of energy.
+
+Farmers will cicle through their assigned farm, city hall and house.
+When they get to a farm they will work and gather as much resources as they can carry.
+When arriving to a city hall then they will pay a fixed amount of the resources they're carrying as
+taxes, such resources are then stored in the city hall.
+After they get to their house a farmer will rest and consume as much of the resources they have at
+their disposal to refill their energy, if they do not have enough of them to do so then they will
+change their current occupation to be a bandit or a soldier based on a given probability. On the
+other hand, if they have more resources than needed then they will store the excedence in their house
+to future use.
+
+Bandits
 
 \subsection{Design concepts}
 
@@ -188,7 +207,7 @@ some parts of the map
 \subsubsection{Adaptation}
 
 The agents adapt to their current situation by means of changing their
-ocupation if the conditions are unfavorable.
+ocupation if the llllconditions are unfavorable.
 
 \subsubsection{Objectives}
 
