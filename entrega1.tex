@@ -39,7 +39,8 @@
 \WSCpagesetup{Ortega and Salgado}
 
 % AUTHOR: Enter the title, all letters in upper case
-\title{Farmers, Bandits and Soldiers an agent based simulation}
+\title{Farmers, Bandits and Soldiers an agent based simulation about delinquency in the
+       society}
 
 \author{Andres Felipe Ortega Montoya\\ [12pt]
 aortega7@eafit.edu.co\\
@@ -55,20 +56,45 @@ Universidad EAFIT\\
 \maketitle
 
 \section*{ABSTRACT}
-
-This document describes the implementation of an artificial society model,
-whose members are farmers, that represent the productive class, bandits,
-which represents the delinquency, and soldiers, that represents the public
-control. Delincuency is one of the main probles that societies face
-nowadays, one the main reasons of this is the burden that it represents in
-the economy and the effect that has in the life quality of the 
-population. In this work we present an implementation of an agent based
-model that aimns to simulate a simplified version of a society and their
-interactions, taking as base point the ideas proposed in some articles of
-systems dynamics. As implementation tool we use the NetLogo software
+Delincuency is one of the main probles that societies face nowadays,
+one the main reasons of this is the burden that it represents in the
+economy and the effect that has in the life quality of the population.
+This document describes the implementation of an agent base model that aims to
+simulate a simplified version of a society and some of their interactions,
+specifically those who have to do with the effects of delinquency.
+In this work the society is conformed by three social groups, the
+first one are farmers, that represent the productive class, the scond
+one are bandits, which represents the delinquency, and the last ones
+are soldiers, that represents the public control. This work takes as base point
+the ideas proposed in some articles of systems dynamics and adapt them to an
+agent based simulation. As implementation tool we use the NetLogo software
 \cite{netlogo}.
 
 \section{Introduction}
+
+Delinquency affects a lot of countries all arround the world. Because of the
+continuous problems that this actions generate in terms of social, econmical and
+political aspects, the nations continue to spend huge amount of resources
+trying to keep this problematic as controled as possible, but the results achived
+are very poor, as seen in the indices of peace. Actually countries have become
+less peaceful during the last decade, bringing enourmous concequences to the
+society. \cite{peace} \cite{violence}
+
+With this motivation the authors developed an agent based model in which they
+represent an artificial society that is conformed by three social groups,
+Farmers, Bandits and Soldiers. The main objective of this model is to
+analyse the effect of delincuency by testing different scenarios that
+occur based on the configuration of the parameters of the simulation,
+in order to see how this phenomenon affects the society and its
+economy.
+
+In the following sections we present some previous work that has been developed
+in this topic, later a detailed description of the model its given, with the
+help of the ODD (Overview, Design concepts and Details) methodology \cite{odd},
+then an implementation section is introduced, there the details of the creation 
+process of the model will be explained. Lastly a section about the experiments
+conducted with the model is shown and the conclusions of the work are described
+at the end of the document.
 
 \section{Previous work}
 
