@@ -56,37 +56,53 @@ Universidad EAFIT\\
 
 \section*{ABSTRACT}
 
-This document describes the implementation of an artificial society model, which members are
-farmers that represent the productive class, bandits which represents the delinquency
-and soldiers that represents the public control. Delincuency is one of the main probles that
-societies face nowadays, one the main reasons of this is the burden that it represents in the
-economy and the effect that has in the life quality of the rest of the population. In this work
-we present an implementation of an agent based model that aimns to simulate a simplified version
-of a society and their interactions, taking as base point the ideas proposed in some articles of
-systems dynamics. As implementation tool we use the NetLogo software \cite{netlogo}.
+This document describes the implementation of an artificial society model,
+whose members are farmers, that represent the productive class, bandits,
+which represents the delinquency, and soldiers, that represents the public
+control. Delincuency is one of the main probles that societies face
+nowadays, one the main reasons of this is the burden that it represents in
+the economy and the effect that has in the life quality of the 
+population. In this work we present an implementation of an agent based
+model that aimns to simulate a simplified version of a society and their
+interactions, taking as base point the ideas proposed in some articles of
+systems dynamics. As implementation tool we use the NetLogo software
+\cite{netlogo}.
 
-\section{Generalities}
+\section{Introduction}
 
-This model is the representation of a simplified society in which three types of building define
-the infractucture necessary for the interactions that occurs between the social groups. In this model
-the economy is based on a single type of resource which represents all commodities,
-this resorces are proced by farmers in the first type of building named farms, this buildings
-are assume as an infite source of income. This resources are also used as currency to pay taxes
-in the second type of building, named city hall, this building reseprent the government institutions
-and store the supplys that are used to sustain soldiers, which are in charge of seeking for the
-well being of the farmers by keeping bandit population at bay. The last building type, named houses,
-are used by farmers and bandits to store the spare resources that they earn either by gathering them
-in a farm, in the case of farmers, or stealing, in the case of bandits.
+\section{Previous work}
 
-\subsection{Purpose}
+This work is based on \cite{article1} \cite{article2}
 
-The purpose of the model is to analyse how delincuency affects the normal development of a socity,
-from the effect that has in the workforce and how reactions, like incrementing the public force
-angets, emerge as responce to protect citizens from criminality.
+\section{Conceptual modeling}
 
-\section{Entities, state variables and scales}
+\subsection{Generalities}
 
-\subsection{Entities}
+This model is the representation of a simplified society in which three types
+of building define the infractucture necessary for the interactions that occurs
+between the three social groups. In this model the
+economy is based on a single type of resource which represents all commodities,
+this resorces are produced by farmers in the first type of building named
+farms, this buildings are assume as an infite source of income. This
+resources are also used as currency to pay taxes in the second type of
+building, named city hall, this building reseprent the government
+institutions and store the supplys that are used to sustain soldiers,
+which are in charge of seeking for the well being of the farmers by
+keeping bandit population at bay. The last building type, named houses,
+are used by farmers and bandits to store the spare resources that they
+earn either by gathering them in a farm, in the case of farmers, or
+stealing, in the case of bandits.
+
+\subsubsection{Purpose}
+
+The purpose of the model is to analyse how delincuency affects the normal
+development of a socity, from the effect that has in the workforce and how
+reactions, like incrementing the public force angets, emerge as responce to
+protect citizens from criminality.
+
+\subsubsection{Entities, state variables and scales}
+
+\noindent \textbf{Entities}
 
 \begin{itemize}
     \item Bandits: Steal resources from farmers to sustain themselves while trying to avoid soldiers.
@@ -95,7 +111,7 @@ angets, emerge as responce to protect citizens from criminality.
     \item Buildings: Store agent's resources for latter consumption.
 \end{itemize}
 
-\subsection{State variables}
+\noindent \textbf{State variables}
 
 Human agents
 
@@ -111,14 +127,14 @@ Buildings
     \item Storage
 \end{itemize}
 
-\subsection{Scales}
+\noindent \textbf{Scales}
 
 \begin{itemize}
     \item Ticks means 6 min
     \item Patch means 1 Km squared
 \end{itemize}
 
-\section{Process overview and scheduling}
+\subsubsection{Process overview and scheduling}
 
 \begin{itemize}
     \item move
@@ -131,74 +147,76 @@ they are and the energy available, then if the conditions are not favorable for
 the agent then, based on a fixed probability, they choose to continue in their
 current occupation or switch to another one.
 
-\section{Design concepts}
+\subsection{Design concepts}
 
-\subsection{Basic principles}
+\subsubsection{Basic principles}
 
 All agents want to collect resources, but not in a standard way. There is a
 finite amount of weight and energy that each individual can have.
 
-\subsection{Emergence}
+\subsubsection{Emergence}
 
 The behaviour that emerge from the model are the agglomeration of agents in
 some parts of the map
 
-\subsection{Adaptation}
+\subsubsection{Adaptation}
 
 The agents adapt to their current situation by means of changing their
 ocupation if the conditions are unfavorable.
 
-\subsection{Objectives}
+\subsubsection{Objectives}
 
 The objective of the farmers is to collect as much resources as they can, in
 the case of bandits the objective is to steal such resources from farmers, and
 the soldiers seek to decreace the amount of bandits in the society. This
 objectives are affected by each individual's state variables.
 
-\subsection{Learning}
+\subsubsection{Learning}
 
 Learning capabilities of agents are not taken into account in this model
 
-\subsection{Prediction}
+\subsubsection{Prediction}
 
 Prediction procedures are not taken into account as part of the agent's
 behaviour in this model
 
-\subsection{Sensing}
+\subsubsection{Sensing}
 
 Each agent can see other agents and can decide how to act based on this
 knowledge.
 
-\subsection{Interaction}
+\subsubsection{Interaction}
 
 Bandits assoult farmers thus stealing all the resources they are currently
 carrying. Soldiers capture bandits and try to convert them into farmers.
 
-\subsection{Stochasticity}
+\subsubsection{Stochasticity}
 
 The process in which an agent changes occupation is random, which implies that
 each execution can not be reproduces exactly.
 
-\subsection{Collectives}
+\subsubsection{Collectives}
 
 Agents are divided in three groups that defines the behaviour they have to
 follow and the way they are going to seek their objectives
 
-\subsection{Observation}
+\subsubsection{Observation}
 
 The variables that are necessary to know the current state of the system are
 the population of each social group, the violence indicator and the capital
 flow.
 
-\section{Details}
+\subsection{Details}
 
-\subsection{Initialization}
+\subsubsection{Initialization}
 
 The position of all agents are chosen randomly, the amount of subjects per
 social group is recived as parameter to the model as well as the probabilities
 of switching current faction.
 
-\subsection{Submodels}
+\subsubsection{Input}
+
+\subsubsection{Submodels}
 
 Farmers move towards the nearest farm or city hall depending on the weight they
 are carrying. but if their energy is sufficiently low they will decide to go
@@ -209,26 +227,7 @@ bandit in their field of view trying to convert them into farmers, if the
 energy they have is too low they will move towards the nearest city hall to
 refill it
 
-\section{Citation}
-
-The format for other types of reference can be inferred from the examples in the references, which include:
-\begin{itemize}
-\item a technical report \cite{chi89},
-\item a proceedings article \cite{cheng:input94},
-\item a journal article \cite{gupta:mnormal},
-\item a book by 2 authors \cite{hammersley:montecarlo},
-\item a chapter in a book \cite{sch79},
-\item an unpublished thesis or dissertation \cite{ste99},
-\item a book with no identified authors \cite{chicago03}, and
-\item a document available on the web \cite{Foundation}.
-\end{itemize}
-
 \bibliographystyle{wsc}
 \bibliography{entrega1}
-
-\section*{AUTHOR BIOGRAPHIES}
-
-\noindent {\bf ANDRES FELIPE ORTEGA MONTOYA} His email address is \email{aortega7@eafit.edu.co}.\\
-\noindent {\bf ALEJANDRO SALGADO GÓMEZ} His email address is \email{asalgad2@eafit.edu.co}.\\
 
 \end{document}
