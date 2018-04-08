@@ -151,24 +151,25 @@ development of a socity, from the effect that has in the workforce and how
 reactions, like incrementing the public force angets, emerge as responce to
 protect citizens from criminality.
 
-\subsubsection{Entities, state variables and scales}
+\subsubsection{Entities and state variables}
 \noindent \textbf{Entities}
 
 \begin{itemize}
-    \item Farms: Provides an endless flux of resources necessary for the population to subsist.
+    \item Farms: Provides an endless source of the necessary resources for the population to
+          subsist with.
     \item Houses: Serves as an storage for the spare resources an indivial has after using a portion
-          of those to meet its needs. If a given individual doesn't carry enought resources
-          to do so they can use the ones they've previously stored in their house.
+          of those to meet its needs. If a given individual does not carry enought resources
+          to refill its energy, they can use the ones they have previously stored in their house.
     \item City Hall: It stores the resources that farmers pay as taxes and also the ones soldiers
           seize from bandits. Soldiers can use the funds in the city hall to sustain themselves.
     \item Farmers: They gather resources from farms and pay a certain amount of those resources in the
           city hall as a way of paying soldiers for their protection.
     \item Bandits: Steal resources from farmers to sustain themselves while trying to avoid soldiers.
-    \item Soldiers: Pursue bandits in order to recover the funds they've stolen and reintegrate them
-          into society a farmers.
+    \item Soldiers: Pursue bandits in order to reintegrate them into society as farmers and recover
+          the funds they have stolen.
 \end{itemize}
 
-\noindent \textbf{State variables}
+\noindent \textbf{State variables}\\
 
 \noindent The common atributes farmers, bandits and soldiers have are:
 
@@ -176,18 +177,15 @@ protect citizens from criminality.
     \item Energy: This serves as a way of telling of how much time an agent have before it needs to
           eat and thus return to its home or in the case or soldiers, city hall.
     \item Load: It reprecents the quantity of resources a given agent is carrying with itself at the
-          moment
+          moment.
+    \item Destination: This is the current destination a given agent seeks to move towards to. In the
+          case of farmers this can be their house, farm or city hall. In the case of bandits this can
+          be a possible farmer to rob or their house. And finally it can be a nearby bandit or their
+          city hall in the case of soldiers.
 \end{itemize}
 
 \noindent Houses and City Halls share a common atribute named inventory which is the amount of
 resources it is storing at the moment.\hfill\break
-
-\noindent \textbf{Scales}
-
-\begin{itemize}
-    \item Ticks means 6 min
-    \item Patch means 1 Km squared
-\end{itemize}
 
 \subsubsection{Process overview and scheduling}
 
@@ -201,25 +199,31 @@ resources it is storing at the moment.\hfill\break
     \item Switch-occupation
 \end{itemize}
 
-On each tick all agents will lose 1 energy and will move to their current objective, if they have 0
-energy then they will start consuming the resources they're carrying at the moment to supply for
+On each tick all agents will lose 1 unit of energy and will move to their destination, if they have
+zero energy then they will start consuming the resources they are carrying at the moment to supply
 their lack of energy.
 
-Farmers will cicle through their assigned farm, city hall and house.
+In the case an agent is a farmer it will cicle through their assigned farm, city hall and house.
 When they get to a farm they will work and gather as much resources as they can carry.
-When arriving to a city hall then they will pay a fixed amount of the resources they're carrying as
+When arriving to a city hall then they will pay a fixed amount of the resources they are carrying as
 taxes, such resources are then stored in the city hall.
-After they get to their house a farmer will rest and consume as much of the resources they have at
-their disposal to refill their energy, if they do not have enough of them to do so then they will
+After they get to their house a they will rest and consume as much of the resources they have at
+their disposal to refill their energy, if they do not have enough of them to do so, they will
 change their current occupation to be a bandit or a soldier based on a given probability. On the
-other hand, if they have more resources than needed then they will store the excedence in their house
-to future use.
+other hand, if they have more resources than needed they will store the surplus in their house
+for future use.
 
-Bandits will chase after the farmer with non-zero load that is nearest to them or if there is a nearby
-soldier then they will try to avoid them.
-When they get close enough to a farmer they will take all of their resourses and seek a new farmer to
-steal from. They will continue to do so until they either reach the maximum load they are able to
-carry or until they empty their energy.
+If the agent is a bandit it will chase after the farmer with non-zero load that is nearest to them and
+if they get close enough they will take all of their resourses. In the case there is a nearby soldier
+they will run away from it, otherwise they will seek a new farmer to steal from until they either
+reach the maximum load they are able to carry or they empty their energy to return home. When they get
+home they will do in the same manner as farmers do, the only difference being that they can only
+switch occupation to farmer if the situation arises.
+
+Finally, soldiers chase after their nearest bandit in order to seize their belongings and convert them
+into farmers. In the case their energy hits zero, they will return to their city hall to rest and
+recover their energy by consuming the resources available in the building. In the situation that
+there are not enough resources to meet their needs they will become farmers.
 
 \subsection{Design concepts}
 
