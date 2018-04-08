@@ -157,6 +157,8 @@ protect citizens from criminality.
     farmers and recover the funds they have stolen.
 \end{itemize}
 
+\newpage
+
 \noindent \textbf{State variables}\\
 
 \noindent The common atributes farmers, bandits and soldiers have are:
@@ -181,46 +183,12 @@ is the amount of resources it is storing at the moment.\hfill\break
 
 \subsubsection{Process overview and scheduling}
 
-\begin{itemize}
-    \item Move
-    \item Work
-    \item Pay-taxes
-    \item Steal
-    \item Seize
-    \item Rest
-    \item Switch-occupation
-\end{itemize}
-
-On each tick all agents will lose 1 unit of energy and will move to their
-destination, if they have zero energy then they will start consuming the
-resources they are carrying at the moment to supply their lack of energy.
-
-In the case an agent is a farmer it will cicle through their assigned farm,
-city hall and house.  When they get to a farm they will work and gather as
-much resources as they can carry.  When arriving to a city hall then they
-will pay a fixed amount of the resources they are carrying as taxes, such
-resources are then stored in the city hall.  After they get to their house a
-they will rest and consume as much of the resources they have at their
-disposal to refill their energy, if they do not have enough of them to do
-so, they will change their current occupation to be a bandit or a soldier
-based on a given probability. On the other hand, if they have more resources
-than needed they will store the surplus in their house for future use.
-
-If the agent is a bandit it will chase after the farmer with non-zero load that
-is nearest to them and if they get close enough they will take all of their
-resourses. In the case there is a nearby soldier they will run away from it,
-otherwise they will seek a new farmer to steal from until they either reach
-the maximum load they are able to carry or they empty their energy to
-return home. When they get home they will do in the same manner as farmers
-do, the only difference being that they can only switch occupation to
-farmer if the situation arises.
-
-Finally, soldiers chase after their nearest bandit in order to seize their
-belongings and convert them into farmers. In the case their energy hits zero,
-they will return to their city hall to rest and recover their energy
-by consuming the resources available in the building. In the
-situation that there are not enough resources to meet their needs
-they will become farmers.
+Our procesess is divided in three parts, one for each social group. If the
+agent is a farmer it will cycle through their assigned farm, city hall and
+house. If the agent is a bandit will cycle trough, chasing after farmers trying
+to assault them and going home. In the case of soldiers they loop over chasing
+after bandits and going to their city hall. Finally on each tick all agents
+will lose 1 unit of energy.
 
 \subsection{Design concepts}
 
@@ -321,14 +289,60 @@ There is no input data used in the model.
 
 \subsubsection{Submodels}
 
-Farmers move towards the nearest farm or city hall depending on the weight they
-are carrying. but if their energy is sufficiently low they will decide to go
-home to refill it. Bandits move towards the nearest farmer trying to assoult
-them, but also trying to avoid soldiers, finally if their energy is too low
-they will return to their home to refill it. Soldiers move towards the nearest
-bandit in their field of view trying to convert them into farmers, if the
-energy they have is too low they will move towards the nearest city hall to
-refill it
+The submodels are
+
+\begin{itemize}
+    \item Move
+    \item Rest
+    \item Switch-occupation
+    \item Work
+    \item Pay-taxes
+    \item Assault
+    \item Seize
+\end{itemize}
+
+The move submodel is executed on each tick by all human agents, which will make
+them move to their current destiny and lose 1 unit of energy. If they have no
+energy they will start consuming the resources they are carrying at the moment
+to supply their lack of energy.
+
+The rest submodel is executed when an agent gets to their resting place (houses
+in the case of bandits and farmers, and city halls for soldiers) they
+will consume as much of the resources they have at their disposal to refill
+their energy. If they do not have enough resources to do so, they will execute
+the switch-occupation submodel.
+
+The switch-occupation submodel is executed in a different way depending on the
+agent occupation. In the case of farmers will dicide if the new occupation is 
+to became a soldier or a bandit depending on the government support. 
+
+
+In the case an agent is a farmer it will cicle through their assigned farm,
+city hall and house. When they get to a farm they will work and gather as
+much resources as they can carry. When arriving to a city hall then they
+will pay a fixed amount of the resources they are carrying as taxes, such
+resources are then stored in the city hall. After they get to their house a
+they will execute the rest submodel.
+
+to be a bandit or a soldier
+based on a given probability. On the other hand, if they have more resources
+than needed they will store the surplus in their house for future use.
+
+If the agent is a bandit it will chase after the farmer with non-zero load that
+is nearest to them and if they get close enough they will take all of their
+resourses. In the case there is a nearby soldier they will run away from it,
+otherwise they will seek a new farmer to steal from until they either reach
+the maximum load they are able to carry or they empty their energy to
+return home. When they get home they will do in the same manner as farmers
+do, the only difference being that they can only switch occupation to
+farmer if the situation arises.
+
+Finally, soldiers chase after their nearest bandit in order to seize their
+belongings and convert them into farmers. In the case their energy hits zero,
+they will return to their city hall to rest and recover their energy
+by consuming the resources available in the building. In the
+situation that there are not enough resources to meet their needs
+they will become farmers.
 
 \bibliographystyle{wsc}
 \bibliography{entrega1}
