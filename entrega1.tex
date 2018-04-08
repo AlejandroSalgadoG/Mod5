@@ -1,46 +1,25 @@
 \input{wsc14style.tex}
 
 \documentclass{wscpaperproc}
+
 \usepackage{latexsym}
-%\usepackage{caption}
+\usepackage{caption}
 \usepackage{graphicx}
-\usepackage{mathptmx}
 \usepackage[utf8]{inputenc}
 
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{amsbsy}
-\usepackage{amsthm}
-
-\usepackage[pdftex,colorlinks=true,urlcolor=blue,citecolor=black,anchorcolor=black,linkcolor=black]{hyperref}
-
-% If you use theoremes
-\newtheoremstyle{wsc}% hnamei
-{3pt}% hSpace abovei
-{3pt}% hSpace belowi
-{}% hBody fonti
-{}% hIndent amounti1
-{\bf}% hTheorem head fontbf
-{}% hPunctuation after theorem headi
-{.5em}% hSpace after theorem headi2
-{}% hTheorem head spec (can be left empty, meaning `normal')i
-
-\theoremstyle{wsc}
-\newtheorem{theorem}{Theorem}
-\renewcommand{\thetheorem}{ \arabic{theorem}}
-\newtheorem{corollary}[theorem]{Corollary}
-\renewcommand{\thecorollary}{\arabic{corollary}}
-\newtheorem{definition}{Definition}
-\renewcommand{\thedefinition}{\arabic{definition}}
+\usepackage[pdftex,
+            colorlinks=true,
+            urlcolor=blue,
+            citecolor=black,
+            anchorcolor=black,
+            linkcolor=black] {hyperref}
 
 \begin{document}
 
 \WSCpagesetup{Ortega and Salgado}
 
-% AUTHOR: Enter the title, all letters in upper case
-\title{Farmers, Bandits and Soldiers an agent based simulation about delinquency in the
-       society}
+\title{Farmers, Bandits and Soldiers an agent based simulation about
+       delinquency in the society}
 
 \author{Andres Felipe Ortega Montoya\\ [12pt]
 aortega7@eafit.edu.co\\
@@ -290,29 +269,43 @@ behaviour in this model.
 
 \subsubsection{Sensing}
 
-Each agent can see other agents and can decide how to act based on this
-knowledge.
+In this model bandits can know which farmers are currently carrying any resources
+with themselves, they also search for nearby soldiers in order to be ready to
+run away. In the case of soldiers they can know the position of the closest
+bandit, so that they can chase after it. Also all agents are aware of the
+location of the necessary buildings to carry out their occupation.
 
 \subsubsection{Interaction}
 
-Bandits assoult farmers thus stealing all the resources they are currently
-carrying. Soldiers capture bandits and try to convert them into farmers.
+The model exhibit two types of interactions, one passive between members of the
+social groups and the buildings, and the other one active between human agents
+only. In the first case houses and city halls are used by active agents to
+store their spare resources and farms are used by farmers to get the resources
+they need for living. In the second case there are interactions between
+bandits and the farmers they are going to steal from, and between soldiers and
+the bandtis they are seeking to convert.
 
 \subsubsection{Stochasticity}
 
-The process in which an agent changes occupation is random, which implies that
-each execution can not be reproduces exactly.
+This model is present a stochastic behaviour due to the random initialization of
+buildings and the introduction of a fix probability to determine the change of
+occupation in the case of farmers to simulate the government support they have.
 
 \subsubsection{Collectives}
 
-Agents are divided in three groups that defines the behaviour they have to
-follow and the way they are going to seek their objectives
+The model is define in terms of three major groups, farmers that represent
+the productive class, bandits which represents the delinquency and soldiers
+that represent control of the government in the society. The dynamic of the
+system is define in terms of the interactions of these three groups.
+% search for houses
 
 \subsubsection{Observation}
 
 The variables that are necessary to know the current state of the system are
-the population of each social group, the violence indicator and the capital
-flow.
+the population of each social group. The violence indicator, which is defined
+in terms of the number of crimes committed in a specific location of the map.
+Finally the capital that each group is currently possesing, which describes the
+economical force and hence the success that the group has achived.
 
 \subsection{Details}
 
@@ -323,6 +316,8 @@ social group is recived as parameter to the model as well as the probabilities
 of switching current faction.
 
 \subsubsection{Input}
+
+There is no input data used in the model.
 
 \subsubsection{Submodels}
 
