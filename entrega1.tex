@@ -98,30 +98,30 @@ at the end of the document.
 
 \section{Previous work}
 
-This work is based on two main acticles, both addressed the problem from the     
-system dynamics perspective, however the authors find that the ideas proposed in 
-this articles can be applied in an agent base simulation, giving the possibility 
-to explore new caracteristics of the problem and see others in a more            
-detail way, thanks to the granularity that this type of modelation offers.       
-                                                                                 
-The first article studies an artificial society where they seek for politics     
-that leads to a state of peace. In that work they represent the society with     
-the same groups as in the present work, and state that the members of the        
-society can change their role, based on psychological or economical conditions,   
-such as the level of empathy with their social group or the profits              
-that their occupations generate. The objective was to find politics              
-that leads to an estabilization of the system in a state of peace and            
-prosperity by changing different parameters of the model, such as the            
-sensivility to violence or the initial population of the different social        
-groups. \cite{article1}                                                                                                                                                                        
-                                                                                 
-The second article is about the confrontations between an insurgent force and    
-militar forces of a government. In that work they describe the effects and       
-concequencies about different strategies that can be used to try to solve the    
+This work is based on two main acticles, both addressed the problem from the
+system dynamics perspective, however the authors find that the ideas proposed in
+this articles can be applied in an agent base simulation, giving the possibility
+to explore new caracteristics of the problem and see others in a more
+detail way, thanks to the granularity that this type of modelation offers.
+
+The first article studies an artificial society where they seek for politics
+that leads to a state of peace. In that work they represent the society with
+the same groups as in the present work, and state that the members of the
+society can change their role, based on psychological or economical conditions,
+such as the level of empathy with their social group or the profits
+that their occupations generate. The objective was to find politics
+that leads to an estabilization of the system in a state of peace and
+prosperity by changing different parameters of the model, such as the
+sensivility to violence or the initial population of the different social
+groups. \cite{article1}
+
+The second article is about the confrontations between an insurgent force and
+militar forces of a government. In that work they describe the effects and
+concequencies about different strategies that can be used to try to solve the
 problem, always with the goal of minimizing the threats civilians are exposed to.
-This article states that one of the main factors that has to be taken   
-into account is the support that the population has to its government, because   
-this is the fact that defines if the civilian population will became part of the 
+This article states that one of the main factors that has to be taken
+into account is the support that the population has to its government, because
+this is the fact that defines if the civilian population will became part of the
 insurgents rather than help the government, because it is in disagreement with
 the actual state of the society. \cite{article2}
 
@@ -155,18 +155,27 @@ protect citizens from criminality.
 \noindent \textbf{Entities}
 
 \begin{itemize}
-    \item Farms: Provides an endless source of the necessary resources for the population to
-          subsist with.
-    \item Houses: Serves as an storage for the spare resources an indivial has after using a portion
-          of those to meet its needs. If a given individual does not carry enought resources
-          to refill its energy, they can use the ones they have previously stored in their house.
-    \item City Hall: It stores the resources that farmers pay as taxes and also the ones soldiers
-          seize from bandits. Soldiers can use the funds in the city hall to sustain themselves.
-    \item Farmers: They gather resources from farms and pay a certain amount of those resources in the
-          city hall as a way of paying soldiers for their protection.
-    \item Bandits: Steal resources from farmers to sustain themselves while trying to avoid soldiers.
-    \item Soldiers: Pursue bandits in order to reintegrate them into society as farmers and recover
-          the funds they have stolen.
+    \item Farms: Provides an endless source of the necessary resources for the
+    population to subsist with.
+
+    \item Houses: Serves as an storage for the spare resources an indivial has
+    after using a portion of those to meet its needs. If a given individual
+    does not carry enought resources to refill its energy, they can use the
+    ones they have previously stored in their house.
+
+    \item City Hall: It stores the resources that farmers pay as taxes and also
+    the ones soldiers seize from bandits. Soldiers can use the funds in the
+    city hall to sustain themselves.
+
+    \item Farmers: They gather resources from farms and pay a certain amount of
+    those resources in the city hall as a way of paying soldiers for their
+    protection.
+
+    \item Bandits: Steal resources from farmers to sustain themselves while
+    trying to avoid soldiers.
+
+    \item Soldiers: Pursue bandits in order to reintegrate them into society as
+    farmers and recover the funds they have stolen.
 \end{itemize}
 
 \noindent \textbf{State variables}\\
@@ -174,18 +183,22 @@ protect citizens from criminality.
 \noindent The common atributes farmers, bandits and soldiers have are:
 
 \begin{itemize}
-    \item Energy: This serves as a way of telling of how much time an agent have before it needs to
-          eat and thus return to its home or in the case or soldiers, city hall.
-    \item Load: It reprecents the quantity of resources a given agent is carrying with itself at the
-          moment.
-    \item Destination: This is the current destination a given agent seeks to move towards to. In the
-          case of farmers this can be their house, farm or city hall. In the case of bandits this can
-          be a possible farmer to rob or their house. And finally it can be a nearby bandit or their
-          city hall in the case of soldiers.
+    \item Energy: This serves as a way of telling of how much time an agent
+    have before it needs to eat and thus return to its home or in the case or
+    soldiers, city hall.
+
+    \item Load: It reprecents the quantity of resources a given agent is
+    carrying with itself at the moment.
+
+    \item Destination: This is the current destination a given agent seeks to
+    move towards to. In the case of farmers this can be their house, farm or
+    city hall. In the case of bandits this can be a possible farmer to rob or
+    their house. And finally it can be a nearby bandit or their city hall in
+    the case of soldiers.
 \end{itemize}
 
-\noindent Houses and City Halls share a common atribute named inventory which is the amount of
-resources it is storing at the moment.\hfill\break
+\noindent Houses and City Halls share a common atribute named inventory which
+is the amount of resources it is storing at the moment.\hfill\break
 
 \subsubsection{Process overview and scheduling}
 
@@ -199,64 +212,81 @@ resources it is storing at the moment.\hfill\break
     \item Switch-occupation
 \end{itemize}
 
-On each tick all agents will lose 1 unit of energy and will move to their destination, if they have
-zero energy then they will start consuming the resources they are carrying at the moment to supply
-their lack of energy.
+On each tick all agents will lose 1 unit of energy and will move to their
+destination, if they have zero energy then they will start consuming the
+resources they are carrying at the moment to supply their lack of energy.
 
-In the case an agent is a farmer it will cicle through their assigned farm, city hall and house.
-When they get to a farm they will work and gather as much resources as they can carry.
-When arriving to a city hall then they will pay a fixed amount of the resources they are carrying as
-taxes, such resources are then stored in the city hall.
-After they get to their house a they will rest and consume as much of the resources they have at
-their disposal to refill their energy, if they do not have enough of them to do so, they will
-change their current occupation to be a bandit or a soldier based on a given probability. On the
-other hand, if they have more resources than needed they will store the surplus in their house
-for future use.
+In the case an agent is a farmer it will cicle through their assigned farm,
+city hall and house.  When they get to a farm they will work and gather as
+much resources as they can carry.  When arriving to a city hall then they
+will pay a fixed amount of the resources they are carrying as taxes, such
+resources are then stored in the city hall.  After they get to their house a
+they will rest and consume as much of the resources they have at their
+disposal to refill their energy, if they do not have enough of them to do
+so, they will change their current occupation to be a bandit or a soldier
+based on a given probability. On the other hand, if they have more resources
+than needed they will store the surplus in their house for future use.
 
-If the agent is a bandit it will chase after the farmer with non-zero load that is nearest to them and
-if they get close enough they will take all of their resourses. In the case there is a nearby soldier
-they will run away from it, otherwise they will seek a new farmer to steal from until they either
-reach the maximum load they are able to carry or they empty their energy to return home. When they get
-home they will do in the same manner as farmers do, the only difference being that they can only
-switch occupation to farmer if the situation arises.
+If the agent is a bandit it will chase after the farmer with non-zero load that
+is nearest to them and if they get close enough they will take all of their
+resourses. In the case there is a nearby soldier they will run away from it,
+otherwise they will seek a new farmer to steal from until they either reach
+the maximum load they are able to carry or they empty their energy to
+return home. When they get home they will do in the same manner as farmers
+do, the only difference being that they can only switch occupation to
+farmer if the situation arises.
 
-Finally, soldiers chase after their nearest bandit in order to seize their belongings and convert them
-into farmers. In the case their energy hits zero, they will return to their city hall to rest and
-recover their energy by consuming the resources available in the building. In the situation that
-there are not enough resources to meet their needs they will become farmers.
+Finally, soldiers chase after their nearest bandit in order to seize their
+belongings and convert them into farmers. In the case their energy hits zero,
+they will return to their city hall to rest and recover their energy
+by consuming the resources available in the building. In the
+situation that there are not enough resources to meet their needs
+they will become farmers.
 
 \subsection{Design concepts}
 
 \subsubsection{Basic principles}
 
-All agents want to collect resources, but not in a standard way. There is a
-finite amount of weight and energy that each individual can have.
+In this model it is supposed that the population is constant over time.  All
+agents want to collect resources, each one in a different way depending on its
+occupation. Also it is considered that there is a finite amount of weight and
+energy that each individual can have. The spupply of resources available on
+farms and the amount of resources that can be stored in a building is taken
+as infinite. Finally each person has their own house.
 
 \subsubsection{Emergence}
 
-The behaviour that emerge from the model are the agglomeration of agents in
-some parts of the map
+There are many emergence behaviour in the model like the agglomeration of
+agents in some parts of the map as a consequence of various farmers being
+assigned to the same workplace. This attracts bandits thus incrementing the
+criminality nearby this places and therefore making soldiers to appear in this
+zones. Also the appearrance of sectors with a high dencity of bandits living in
+it due to the remoteness that some places have from farms or city halls, making
+the living as a farmer unsustainable.
 
 \subsubsection{Adaptation}
 
-The agents adapt to their current situation by means of changing their
-ocupation if the llllconditions are unfavorable.
+In the model agents adapt to their current situation if the conditions does not
+provides enough resources to supply for a living by means of changing their
+ocupation. It is important to notice that the social groups that an agent can
+switch to depends on the occupation that they are currently performing.
 
 \subsubsection{Objectives}
 
-The objective of the farmers is to collect as much resources as they can, in
-the case of bandits the objective is to steal such resources from farmers, and
-the soldiers seek to decreace the amount of bandits in the society. This
-objectives are affected by each individual's state variables.
+The objective of an agent varies depending on their current occupation. Farmers
+try to collect as much resources as they can by working their respective farms.
+Bandits try to steal as much resources from farmers as they can, trying not to
+be captured by soldiers. Finally soldiers seek to decreace the amount of
+bandits in the society.
 
 \subsubsection{Learning}
 
-Learning capabilities of agents are not taken into account in this model
+Learning capabilities of agents are not taken into account in this model.
 
 \subsubsection{Prediction}
 
 Prediction procedures are not taken into account as part of the agent's
-behaviour in this model
+behaviour in this model.
 
 \subsubsection{Sensing}
 
