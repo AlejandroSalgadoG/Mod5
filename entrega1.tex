@@ -76,7 +76,7 @@ Delinquency affects a lot of countries all arround the world. Because of the
 continuous problems that this actions generate in terms of social, econmical and
 political aspects, the nations continue to spend huge amount of resources
 trying to keep this problematic as controled as possible, but the results achived
-are very poor, as seen in the indices of peace. Actually countries have become
+are poor, as seen in the indices of peace. Actually countries have become
 less peaceful during the last decade, bringing enourmous concequences to the
 society. \cite{peace} \cite{violence}
 
@@ -91,7 +91,7 @@ economy.
 In the following sections we present some previous work that has been developed
 in this topic, later a detailed description of the model its given, with the
 help of the ODD (Overview, Design concepts and Details) methodology \cite{odd},
-then an implementation section is introduced, there the details of the creation 
+then an implementation section is introduced, there the details of the creation
 process of the model will be explained. Lastly a section about the experiments
 conducted with the model is shown and the conclusions of the work are described
 at the end of the document.
@@ -107,7 +107,7 @@ detail way, thanks to the granularity that this type of modelation offers.
 The first article studies an artificial society where they seek for politics     
 that leads to a state of peace. In that work they represent the society with     
 the same groups as in the present work, and state that the members of the        
-society can change their rol, based on psychological or economical conditions,   
+society can change their role, based on psychological or economical conditions,   
 such as the level of empathy with their social group or the profits              
 that their occupations generate. The objective was to find politics              
 that leads to an estabilization of the system in a state of peace and            
@@ -118,12 +118,12 @@ groups. \cite{article1}
 The second article is about the confrontations between an insurgent force and    
 militar forces of a government. In that work they describe the effects and       
 concequencies about different strategies that can be used to try to solve the    
-problem, always with the goal of minimize the damages to which civilians are     
-exposed. This article states that one of the main factors that has to be taken   
+problem, always with the goal of minimizing the threats civilians are exposed to.
+This article states that one of the main factors that has to be taken   
 into account is the support that the population has to its government, because   
 this is the fact that defines if the civilian population will became part of the 
-insurgents rather than help the government, because its in disagree with the     
-actual state of the society. \cite{article2}
+insurgents rather than help the government, because it is in disagreement with
+the actual state of the society. \cite{article2}
 
 \section{Conceptual modeling}
 
@@ -215,7 +215,11 @@ change their current occupation to be a bandit or a soldier based on a given pro
 other hand, if they have more resources than needed then they will store the excedence in their house
 to future use.
 
-Bandits
+Bandits will chase after the farmer with non-zero load that is nearest to them or if there is a nearby
+soldier then they will try to avoid them.
+When they get close enough to a farmer they will take all of their resourses and seek a new farmer to
+steal from. They will continue to do so until they either reach the maximum load they are able to
+carry or until they empty their energy.
 
 \subsection{Design concepts}
 
