@@ -279,9 +279,18 @@ economical force and hence the success that the group has achived.
 
 \subsubsection{Initialization}
 
-The position of all agents are chosen randomly, the amount of subjects per
-social group is recived as parameter to the model as well as the probabilities
-of switching current faction.
+The model has 14 paramerters, the first nine correspond to the population,
+energy and max load of each social group. Also there are two parameters in
+charge of setting the amount of city halls and farms that the simulation will
+have. Another parameter is the energy from food, that defines the amount of
+energy recovered by each unit of resource. There is another parameter name tax
+rate that establishes the tax fee that farmers have to pay in the city halls.
+Finally the government support parameter is used as the probability that a
+farmer has to choose to become a bandit or a soldier when the choise arrises.
+
+At the begining of the simulation the position of all agents is chosen randomly
+and all the parameters described above are used to determine the execution of
+the simulation.
 
 \subsubsection{Input}
 
@@ -289,78 +298,56 @@ There is no input data used in the model.
 
 \subsubsection{Submodels}
 
-The submodels are
-
 \begin{itemize}
-    \item Move
-    \item Rest
-    \item Switch-occupation
-    \item Work
-    \item Pay-taxes
-    \item Assault
-    \item Seize
+    \item \textbf{Move:} Is executed on each tick by all human agents, which
+    will make them move to their current destination and lose 1 unit of energy.
+    If they have no energy they will start consuming the resources they are
+    carrying at the moment to supply their lack of energy.
+
+    \item \textbf{Rest:} Is executed when an agent gets to
+    their resting place (houses in the case of bandits and farmers, and city
+    halls for soldiers) they will consume as much of the resources they
+    have at their disposal to refill their energy. Any remaining resources will
+    be stored in their resting place for later use. On the other hand, if they
+    do not have enough resources to do so, they will execute the
+    switch-occupation submodel.
+
+    \item \textbf{Switch-occupation:} This one is executed in a different way
+    depending on the agent occupation. In the case of farmers it will dicide if
+    the new occupation is to became a soldier or a bandit depending on the
+    government support. For both bandits and soldiers it will cause them to
+    switch occupation into farmers.
+
+    \item \textbf{Work:} This submodel is unique for farmers. When it is
+    executed they will extract resources from the farm they are currently in.
+    The amount of resources extracted will be equal to the max load they are
+    able to carry. Finally they will set their destination to the city hall to
+    pay-taxes.
+
+    \item \textbf{Pay-taxes:} This is also present only in farmers.
+    They will pay as much resources of the tax rate parameter as they can. If
+    they have less than the amount required they will give up all they
+    have. Whatever the amount of resources they are able to give, will be stored
+    in the city hall to pay for soldiers expenses. Lastly they will change
+    their destination to home in order to rest.
+
+    \item \textbf{Assault:} Only bandits are allowed to execute this submodel.
+    They will set their destination to the nearest farmer with non-zero load to
+    steal all of their belongings. In the case that there is a nearby soldier
+    they will prioritice moving away from them to avoid being caught. They
+    will continue to do so until either their energy hits zero or they get to the
+    maximum amount of load they are able to carry, and later set their detination
+    to their home in order to call the rest submodel.
+
+    \item \textbf{Seize:} Finally, this submodel is responsible to make
+    soldiers set their destination to the nearest bandit, if they get close
+    enought, they will make them execute the switch-occupation submodel. All
+    the resources bandits carry when they get caught are then seized by the
+    soldier. They will chase after bandits until either their energy hits zero
+    or they meet their maximum load, after which they will change their
+    destination to the city hall to rest.
+
 \end{itemize}
-
-The move submodel is executed on each tick by all human agents, which will make
-them move to their current destination and lose 1 unit of energy. If they have
-no energy they will start consuming the resources they are carrying at the
-moment to supply their lack of energy.
-
-The rest submodel is executed when an agent gets to their resting place (houses
-in the case of bandits and farmers, and city halls for soldiers) they
-will consume as much of the resources they have at their disposal to refill
-their energy. Any remaining resources will be stored in their resting place for
-later use. On the other hand, if they do not have enough resources to do so,
-they will execute the switch-occupation submodel.
-
-The switch-occupation submodel is executed in a different way depending on the
-agent occupation. In the case of farmers it will dicide if the new occupation is
-to became a soldier or a bandit depending on the government support. For both
-bandits and soldiers it will cause them to switch occupation into farmers.
-
-In the case an agent is a farmer its destination will cicle through their
-assigned farm, city hall and house and when they get to them they will work, pay
-taxes or rest respectively.
-
-Work is a subprocess that is unique for farmers. When this occurs they will
-extract resources from the farm they are currently in. The amount of resources
-extracted will be equal to the max load they are able to carry.
-
-The pay taxes subprocess is also present only in farmers. Farmers will store a
-certain amount of the resources they are currently carrying in a city hall. If
-they have less than the amount required then they will give up all they have.
-The amount of resources farmers must pay in city halls is a parameter selected
-at the beginning of the simulation.
-
-The assault submodel is proper of bandits. With this they will chase after the
-nearest farmer with non-zero load to steal all of their belongings. In the case
-that there is a nearby soldier they will prioritice moving away from them so not
-be caught. They will continue to so until either their energy hits zero or they
-get to the maximum amount of load they are able to carry, which will cause them
-to set their next destination as their home to rest.
-
-Finally, the seize submodel is responsible for soldiers to move to the nearest
-bandit and if they get close enought they will make them to switch their
-occupation into bandits. All the resources bandits carry when they get caught
-are then seized by the soldier. They will chase after bandits until their energy
-hits zero or they meet their maximum load, after which they will set their next
-destination as their city hall.
-
-%% If the agent is a bandit it will chase after the farmer with non-zero load that
-%% is nearest to them and if they get close enough they will take all of their
-%% resourses. In the case there is a nearby soldier they will run away from it,
-%% otherwise they will seek a new farmer to steal from until they either reach
-%% the maximum load they are able to carry or they empty their energy to
-%% return home. When they get home they will do in the same manner as farmers
-%% do, the only difference being that they can only switch occupation to
-%% farmer if the situation arises.
-
-%% Finally, soldiers chase after their nearest bandit in order to seize their
-%% belongings and convert them into farmers. In the case their energy hits zero,
-%% they will return to their city hall to rest and recover their energy
-%% by consuming the resources available in the building. In the
-%% situation that there are not enough resources to meet their needs
-%% they will become farmers.
 
 \bibliographystyle{wsc}
 \bibliography{entrega1}
