@@ -24,7 +24,7 @@ to setup
   set population (farmers_num + bandits_num + soldiers_num)
 
   set farmer_color blue
-  set bandit_color red
+  set bandit_color orange
   set soldier_color green
 
   ask patches[
@@ -36,7 +36,7 @@ to setup
     set shape "house colonial"
     set inventory 10
 
-    set color orange
+    set color grey
   ]
 
   create-farms farms_num [
@@ -440,7 +440,7 @@ bandits_energy
 bandits_energy
 0
 100
-40.0
+34.0
 1
 1
 NIL
@@ -598,12 +598,12 @@ HORIZONTAL
 
 SWITCH
 421
-48
+304
 594
-81
+337
 see_danger_zones
 see_danger_zones
-1
+0
 1
 -1000
 
