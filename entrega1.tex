@@ -356,28 +356,31 @@ descrived in the last section are what defines how the simulation will execute.
 
 \section{Implementation}
 
-%Claridad
-%Presentación del modelo (imágenes adecuadas)
-%Uso de técnicas avanzadas.
-%Presentación de resultados.
-%Facilidad de uso
-
 As mentioned before the model was implemented using the NetLogo software
-\cite{netlogo}. The interface of the model is as follows, in the
-figure \ref{imp:main_interface1}
-figure \ref{imp:population_plot1}
-figure \ref{imp:economy1}
-figure \ref{imp:parameters1}
-figure \ref{imp:buttons}
+\cite{netlogo}. The first element of the model is the simulation field
+pressented in figure \ref{imp:main_interface1} which shows the space distribution
+of all agents. In there farmers are blue, bandits are orange and soldiers are
+green, just like their houses. Farms are shown in brown with the simbol of a cow
+and city halls are presented with gray color and a colonial house symbol. All
+agents show the amount of resorces they have as a label on top of them. And the
+red squares represent the danger zones, which are directly proportional to the
+intencity of the color.
 
 \newpage
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.5]{Images/Interface1}
+    \includegraphics[scale=0.65]{Images/Interface1}
     \caption{Main interface}
     \label{imp:main_interface1}
 \end{figure}
+
+The second element of the interface are the pupulation and economic indicators,
+which are shown in figure \ref{imp:population_plot1} and
+figure \ref{imp:economy1} respectively. The show the number of individuals per
+social group during all the execution and the total inventory that a specific
+group has stored in their respective buildings (houses for farmers and bandits,
+and city halls for soldiers).
 
 \begin{figure}[h!]
     \centering
@@ -393,12 +396,21 @@ figure \ref{imp:buttons}
     \label{imp:population_plot1}
 \end{figure}
 
+In figure \ref{imp:parameters1} are shown all the parameters of the model as
+sliders and the see danger zones switch that allow the user to see or hide the
+danger messure in all patches represented with the intencity of the red color.
+
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.5]{Images/Sliders1}
     \caption{Model parameters}
     \label{imp:parameters1}
 \end{figure}
+
+Finaly in figure \ref{imp:buttons} are shown the three buttons to control the
+execution. The first one is used to initializate the model, the second one
+executes one tick of the simulation and the last one execute the model
+continuously.
 
 \begin{figure}[h!]
     \centering
