@@ -23,7 +23,7 @@ to setup
 
   set population (farmers_num + bandits_num + soldiers_num)
 
-  set farmer_color white
+  set farmer_color blue
   set bandit_color red
   set soldier_color green
 
@@ -309,10 +309,10 @@ to decrement_energy
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-840
-36
-1572
-769
+671
+32
+1403
+765
 -1
 -1
 21.94
@@ -336,10 +336,10 @@ ticks
 30.0
 
 BUTTON
-15
-23
-80
-56
+40
+40
+105
+73
 NIL
 setup
 NIL
@@ -353,10 +353,10 @@ NIL
 1
 
 BUTTON
-189
-25
-252
-58
+217
+40
+280
+73
 NIL
 go
 T
@@ -370,10 +370,10 @@ NIL
 0
 
 BUTTON
-104
-24
-167
-57
+132
+40
+195
+73
 step
 go
 NIL
@@ -387,10 +387,10 @@ NIL
 1
 
 SLIDER
-18
-81
-190
-114
+35
+101
+207
+134
 farmers_num
 farmers_num
 0
@@ -402,10 +402,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-19
-133
-191
-166
+36
+153
+208
+186
 bandits_num
 bandits_num
 0
@@ -417,10 +417,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-212
-80
-384
-113
+229
+100
+401
+133
 farmers_energy
 farmers_energy
 0
@@ -432,10 +432,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-213
-132
-385
-165
+230
+152
+402
+185
 bandits_energy
 bandits_energy
 0
@@ -447,10 +447,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-405
-81
-577
-114
+422
+100
+594
+133
 farmers_max_load
 farmers_max_load
 0
@@ -462,10 +462,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-407
-132
-579
-165
+421
+153
+593
+186
 bandits_max_load
 bandits_max_load
 0
@@ -477,10 +477,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-23
-317
-195
-350
+229
+253
+401
+286
 energy_from_food
 energy_from_food
 0
@@ -492,10 +492,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-217
-318
-389
-351
+421
+254
+593
+287
 tax_rate
 tax_rate
 0
@@ -507,10 +507,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-19
-183
-191
-216
+38
+204
+210
+237
 soldiers_num
 soldiers_num
 0
@@ -522,10 +522,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-213
-185
-385
-218
+230
+205
+402
+238
 soldiers_energy
 soldiers_energy
 0
@@ -537,10 +537,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-24
-372
-196
-405
+35
+304
+207
+337
 cityhalls_num
 cityhalls_num
 0
@@ -552,10 +552,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-215
-372
-387
-405
+228
+305
+400
+338
 farms_num
 farms_num
 0
@@ -567,10 +567,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-412
-319
-618
-352
+35
+254
+208
+287
 government_support
 government_support
 0
@@ -582,10 +582,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-406
-188
-578
-221
+422
+204
+594
+237
 soldiers_max_load
 soldiers_max_load
 0
@@ -597,10 +597,10 @@ NIL
 HORIZONTAL
 
 SWITCH
-20
-248
-210
-281
+421
+48
+594
+81
 see_danger_zones
 see_danger_zones
 1
@@ -608,10 +608,10 @@ see_danger_zones
 -1000
 
 PLOT
-161
-467
-662
-732
+58
+471
+559
+736
 Population vs Time
 Time
 Population
@@ -623,37 +623,37 @@ true
 true
 "" ""
 PENS
-"farmers" 1.0 0 -8630108 true "" "plot count farmers"
+"farmers" 1.0 0 -13345367 true "" "plot count farmers"
 "soldiers" 1.0 0 -15575016 true "" "plot count soldiers"
 "bandits" 1.0 0 -2674135 true "" "plot count bandits"
 
 MONITOR
-17
-531
-121
-576
+87
+404
+185
+449
 Farmers wealth 
-sum [ inventory ] of houses with [ color = white]
+sum [ inventory ] of houses with [ color = farmer_color]
 2
 1
 11
 
 MONITOR
-18
-594
-115
-639
+260
+402
+357
+447
 Bandits wealth
-sum [ inventory ] of houses with [ color = red]
+sum [ inventory ] of houses with [ color = bandit_color]
 2
 1
 11
 
 MONITOR
-20
-660
-134
-705
+430
+403
+525
+448
 Soldiers wealth
 sum [ inventory ] of cityhalls
 2
