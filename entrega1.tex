@@ -359,12 +359,12 @@ descrived in the last section are what defines how the simulation will execute.
 As mentioned before the model was implemented using the NetLogo software
 \cite{netlogo}. The first element of the model is the simulation field
 pressented in figure \ref{imp:main_interface1} which shows the space distribution
-of all agents. In there farmers are blue, bandits are orange and soldiers are
+of all agents. Farmers are blue, bandits are orange and soldiers are
 green, just like their houses. Farms are shown in brown with the simbol of a cow
 and city halls are presented with gray color and a colonial house symbol. All
 agents show the amount of resorces they have as a label on top of them. And the
-red squares represent the danger zones, which are directly proportional to the
-intencity of the color.
+red squares represent the danger zones, their color intencity is directly
+proportional to how dangerous is the location.
 
 \newpage
 
@@ -375,12 +375,12 @@ intencity of the color.
     \label{imp:main_interface1}
 \end{figure}
 
-The second element of the interface are the pupulation and economic indicators,
-which are shown in figure \ref{imp:population_plot1} and
-figure \ref{imp:economy1} respectively. The show the number of individuals per
-social group during all the execution and the total inventory that a specific
-group has stored in their respective buildings (houses for farmers and bandits,
-and city halls for soldiers).
+The second element of the interface are the economicand pupulation indicators,
+which are shown in figure \ref{imp:economy1} and figure
+\ref{imp:population_plot1} respectively. They show the total inventory that
+a specific group has stored in their respective buildings (houses for
+farmers and bandits, and city halls for soldiers) and the number of
+individuals per social group during all the execution.
 
 \begin{figure}[h!]
     \centering
@@ -397,8 +397,8 @@ and city halls for soldiers).
 \end{figure}
 
 In figure \ref{imp:parameters1} are shown all the parameters of the model as
-sliders and the see danger zones switch that allow the user to see or hide the
-danger messure in all patches represented with the intencity of the red color.
+sliders. The ``see danger zones" switch allows the user to see or hide the
+danger messure of all locations.
 
 \begin{figure}[h!]
     \centering
@@ -418,6 +418,9 @@ continuously.
     \caption{Buttons to control execution}
     \label{imp:buttons}
 \end{figure}
+
+\section{Verificacón y validación}
+
 
 \bibliographystyle{wsc}
 \bibliography{entrega1}
