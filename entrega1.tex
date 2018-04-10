@@ -5,7 +5,9 @@
 \usepackage{latexsym}
 \usepackage{caption}
 \usepackage{graphicx}
+\usepackage{subcaption}
 \usepackage[utf8]{inputenc}
+\usepackage[table]{xcolor}
 
 \usepackage[pdftex,
             colorlinks=true,
@@ -419,8 +421,90 @@ continuously.
     \label{imp:buttons}
 \end{figure}
 
-\section{Verificacón y validación}
+\section{Verification and validation}
 
+\section{Experimentation}
+
+\subsection{Results}
+
+\newpage
+
+\begin{figure}
+    \begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Images/Exp1_sliders.png}
+    \caption{Experiment parameters}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Images/Exp1_indicators.png}
+    \caption{Experiment indicators}
+    \end{subfigure}%
+    \caption{Base experiment}
+\end{figure}
+
+\subsection{Sensitivity analysis}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Government support & Difference & Stabilization tick &  dC/dP\\
+        \hline
+        0.1 & -0.1 & 2525 & -1525\\
+        \hline
+        \rowcolor{lightgray}
+        0.2 &      & 1762 & \\
+        \hline
+        0.3 & 0.1  & 1325 & -875\\
+        \hline
+        0.4 & 0.2  & 900 & -1725\\
+        \hline
+    \end{tabular}
+    \caption{Values for government support}
+    \label{table:government}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Energy from food & Difference & Stabilization tick &  dC/dP\\
+        \hline
+        2 & -2 & 800 & 1925\\
+        \hline
+        \rowcolor{lightgray}
+        4 &      & 1762 & \\
+        \hline
+        6 & 2  & 6875 & 10225\\
+        \hline
+    \end{tabular}
+    \caption{Values for energy from food}
+    \label{table:energy}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Tax rate & Difference & Stabilization tick &  dC/dP\\
+        \hline
+        3 & -1 & 2800 & -4150\\
+        \hline
+        \rowcolor{lightgray}
+        4 &    & 1762 & \\
+        \hline
+        5 & 1  & 1325 & -1750\\
+        \hline
+        6 & 2  & 1000 & -3050\\
+        \hline
+        7 & 3  & 975  & -3150\\
+        \hline
+        8 & 4  & 800  & -3850\\
+        \hline
+    \end{tabular}
+    \caption{Values for energy from food}
+    \label{table:energy}
+\end{table}
 
 \bibliographystyle{wsc}
 \bibliography{entrega1}
