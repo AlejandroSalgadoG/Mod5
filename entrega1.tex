@@ -423,6 +423,22 @@ continuously.
 
 \section{Verification and validation}
 
+After compare the results of the model with the ones shown in the refrence
+articles it was found that the model behaves as expected, even in cases with
+extreme conditions, like the lack of some parameter or its full usage.
+
+It is important to note that when a simulation is executed in multiple
+times, the results may not be the same, this variations can be explained due
+to the stochastic nature of the system and it is not because some failures in
+the model.
+
+Also its important to notice that this model is an extension of the original
+implementation with a dynamic system perspective. In this work aspects like
+the distribution of buildings or the energy of each human agent contributes
+to make a more detail model, that can present results that contains those
+aspects in a logic way, as it was expected, that can be use to understand what
+its happening in the model.
+
 \section{Experimentation}
 
 In this section the results of some simulations are shown and a sensitivity
@@ -522,6 +538,8 @@ figure \ref{bandits_only} and the second one is shown in figure
     \label{soldiers_only}
 \end{figure}
 
+\newpage
+
 Finally in figure \ref{more_buildings} there is and experiment where the number
 of famers and city halls are incremented. This change generates that the farmers
 can have such a profitable recolection of resources that (even with the presence
@@ -543,8 +561,6 @@ in the system.
     \caption{Experiment with an increment in the number of farms and city halls}
     \label{more_buildings}
 \end{figure}
-
-\newpage
 
 \subsection{Sensitivity analysis}
 
