@@ -114,7 +114,7 @@ This model is the representation of a simplified society in which three types
 of building define the infractucture necessary for the interactions that occurs
 between the three social groups. In this model the
 economy is based on a single type of resource which represents all commodities,
-this resorces are produced by farmers in the first type of building named
+this resources are produced by farmers in the first type of building named
 farms, this buildings are assume as an infite source of income. This
 resources are also used as currency to pay taxes in the second type of
 building, named city hall, this building reseprent the government
@@ -364,7 +364,7 @@ pressented in figure \ref{imp:main_interface1} which shows the space distributio
 of all agents. Farmers are blue, bandits are orange and soldiers are
 green, just like their houses. Farms are shown in brown with the simbol of a cow
 and city halls are presented with gray color and a colonial house symbol. All
-agents show the amount of resorces they have as a label on top of them. And the
+agents show the amount of resources they have as a label on top of them. And the
 red squares represent the danger zones, their color intencity is directly
 proportional to how dangerous is the location.
 
@@ -423,8 +423,6 @@ continuously.
 
 \section{Verification and validation}
 
-\newpage
-
 \section{Experimentation}
 
 In this section the results of some simulations are shown and a sensitivity
@@ -434,6 +432,18 @@ exactly. Most of the results shown are the average behavior of various
 simulations.
 
 \subsection{Results}
+
+A variety of experiments were performed with the model. In figure
+\ref{base_experiment} there is the base case of experimentation where the
+population is composed mainly by farmers but there are some bandits in the
+simulation, each group has the same amount of maximum energy but can carry
+different amounts of resources, there is just a few city halls and farms, and
+the government support and tax rate are low as well as the energy from food.
+this simulation shows how the population of bandits starts to grows, until the
+point that this group represents the majority of the society due to the great
+profits that they can obtain from the unprotected farmers. But after a period
+of time the system responds with the increment of soldiers, which generates the
+decrease of bandits and takes the system to a state of peace.
 
 \begin{figure}[h!]
     \begin{subfigure}{0.45\textwidth}
@@ -446,7 +456,19 @@ simulations.
     \caption{Experiment indicators}
     \end{subfigure}%
     \caption{Base experiment}
+    \label{base_experiment}
 \end{figure}
+
+In figure \ref{only_farmers} there is an experiment that aims to show the respond
+of the model when the initial population is conformed exclusively of farmers. In
+this simulation there are two cases, the first one, which is illustrated in the
+figure, shows a period of stability at the begining of the simulation, that is
+later is disturbed because the distributions of buildings causes that
+some houses are too far away from cityhalls or farms, which force
+farmers to change their ocupation, creating the dynamic represented. The other case
+is when the distribution of buildings allows the farmers to generate enough
+resources to live and therefore provokes a stabilization of the system in the
+initial state.\\
 
 \begin{figure}[h!]
     \begin{subfigure}{0.45\textwidth}
@@ -459,48 +481,74 @@ simulations.
     \caption{Experiment indicators}
     \end{subfigure}%
     \caption{Only farmers at the begining}
+    \label{only_farmers}
 \end{figure}
 
+Other cases can be found in figures \ref{bandits_only} and \ref{soldiers_only}
+where the initial population is confirmed only by bandits. In this experiment
+the behaviour of the simulation is similar to the case presented above, there
+is a periord of stable execution followed by a great increment of farmers in
+the system due to the fact that there is no resource production in the system.
+At this point the same two cases of the past experiment reapper under the same
+conditions and with the same consequences. Here the first case is shown in
+figure \ref{bandits_only} and the second one is shown in figure
+\ref{soldiers_only}.\\
+
 \begin{figure}[h!]
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.35\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp3_sliders.png}
     \caption{Experiment parameters}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.35\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp3_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
     \caption{Only bandits at the begining}
+    \label{bandits_only}
 \end{figure}
 
 \begin{figure}[h!]
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.35\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp4_sliders.png}
     \caption{Experiment parameters}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.35\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp4_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
     \caption{Only soldiers at the begining}
+    \label{soldiers_only}
 \end{figure}
 
+Finally in figure \ref{more_buildings} there is and experiment where the number
+of famers and city halls are incremented. This change generates that the farmers
+can have such a profitable recolection of resources that (even with the presence
+of some bandits in the system) the decrease of theier revenue, either becouse of
+tax payments or assaults, is not enough to make them change their occupation,
+which causes a stabilization near the original setup of population distribution 
+in the system.
+
 \begin{figure}[h!]
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.35\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp5_sliders.png}
     \caption{Experiment parameters}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.35\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp5_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
-    \caption{More farmers and city halls}
+    \caption{Incrementing the farmers and city halls}
+    \label{more_buildings}
 \end{figure}
 
+\newpage
+
 \subsection{Sensitivity analysis}
+
+
 
 \begin{table}[h!]
     \centering
@@ -560,9 +608,15 @@ simulations.
         8 & 4  & 800  & -3850\\
         \hline
     \end{tabular}
-    \caption{Values for energy from food}
-    \label{table:energy}
+    \caption{Values for tax rate}
+    \label{table:taxes}
 \end{table}
+
+\section{Conclusions}
+
+\begin{itemize}
+    \item The position of buildings is a key fact in the execution of the model.
+\end{itemize}
 
 \bibliographystyle{wsc}
 \bibliography{entrega1}
