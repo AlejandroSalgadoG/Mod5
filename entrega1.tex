@@ -71,11 +71,11 @@ economy.
 
 In the following sections we present some previous work that has been developed
 in this topic, later a detailed description of the model its given, with the
-help of the ODD (Overview, Design concepts and Details) methodology \cite{odd},
-then an implementation section is introduced, there the details of the creation
-process of the model will be explained. Lastly a section about the experiments
-conducted with the model is shown and the conclusions of the work are described
-at the end of the document.
+help of the ODD (Overview, Design concepts and Details) methodology
+\cite{modbook}, then an implementation section is introduced, there the details
+of the creation process of the model will be explained. Lastly a section about
+the experiments conducted with the model is shown and the conclusions of the
+work are described at the end of the document.
 
 \section{Previous work}
 
@@ -527,7 +527,7 @@ of famers and city halls are incremented. This change generates that the farmers
 can have such a profitable recolection of resources that (even with the presence
 of some bandits in the system) the decrease of theier revenue, either becouse of
 tax payments or assaults, is not enough to make them change their occupation,
-which causes a stabilization near the original setup of population distribution 
+which causes a stabilization near the original setup of population distribution
 in the system.
 
 \begin{figure}[h!]
@@ -548,7 +548,23 @@ in the system.
 
 \subsection{Sensitivity analysis}
 
+The sensitivity analysis is performed for three parameters which are government
+support, which represents the level of support that the civilian population has,
+energy from food, that represents the amount the energy that each resource unit
+provides. And finally the tax rate, representing the amount of resources that
+the farmers have to pay in order to allow the soldiers to fulfill their mission.
 
+The analysis is represented in tables \ref{table:government} to
+\ref{table:taxes} and was carried based on the instructions found in
+\cite{modbook}. The first row specifies the value of the parameter. The second
+one shows the change that was performed, a positive value means an increment
+and a negative value a decrement. The third parameter represents the number
+of ticks necessary to decreace the population of bandits, and therefore the
+delincuency, to a stable level close to zero, this value is taken as the
+measure of each execution. Finally in the last row can be found the change of
+the system respect to the change in the parameter.\\
+
+Table \ref{table:government} shows the analysis of the first parameter.
 
 \begin{table}[h!]
     \centering
@@ -570,6 +586,9 @@ in the system.
     \label{table:government}
 \end{table}
 
+In the table \ref{table:energy} can be found the analysis for the second
+parameter.
+
 \begin{table}[h!]
     \centering
     \begin{tabular}{|c|c|c|c|}
@@ -587,6 +606,8 @@ in the system.
     \caption{Values for energy from food}
     \label{table:energy}
 \end{table}
+
+Finally in table \ref{table:taxes} is the analysis of the third parameter.
 
 \begin{table}[h!]
     \centering
@@ -612,7 +633,7 @@ in the system.
     \label{table:taxes}
 \end{table}
 
-\section{Conclusions}
+\section{Conclusions and recomendations}
 
 \begin{itemize}
     \item The position of buildings is a key fact in the execution of the model.
