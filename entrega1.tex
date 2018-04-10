@@ -382,7 +382,7 @@ which are shown in figure \ref{imp:economy1} and figure
 \ref{imp:population_plot1} respectively. They show the total inventory that
 a specific group has stored in their respective buildings (houses for
 farmers and bandits, and city halls for soldiers) and the number of
-individuals per social group during all the execution.
+individuals per social group during all the execution.\\
 
 \begin{figure}[h!]
     \centering
@@ -400,7 +400,7 @@ individuals per social group during all the execution.
 
 In figure \ref{imp:parameters1} are shown all the parameters of the model as
 sliders. The ``see danger zones" switch allows the user to see or hide the
-danger messure of all locations.
+danger measure of all locations.\\
 
 \begin{figure}[h!]
     \centering
@@ -455,7 +455,7 @@ decrease of bandits and takes the system to a state of peace.
     \includegraphics[width=\textwidth]{Images/Exp1_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
-    \caption{Base experiment}
+    \caption{Base case for experimentation}
     \label{base_experiment}
 \end{figure}
 
@@ -480,7 +480,7 @@ initial state.\\
     \includegraphics[width=\textwidth]{Images/Exp2_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
-    \caption{Only farmers at the begining}
+    \caption{Experiment with only farmers at the begining of simulation}
     \label{only_farmers}
 \end{figure}
 
@@ -495,30 +495,30 @@ figure \ref{bandits_only} and the second one is shown in figure
 \ref{soldiers_only}.\\
 
 \begin{figure}[h!]
-    \begin{subfigure}{0.35\textwidth}
+    \begin{subfigure}{0.45\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp3_sliders.png}
     \caption{Experiment parameters}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.35\textwidth}
+    \begin{subfigure}{0.45\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp3_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
-    \caption{Only bandits at the begining}
+    \caption{Experiment with only bandits at the begining of simulation}
     \label{bandits_only}
 \end{figure}
 
 \begin{figure}[h!]
-    \begin{subfigure}{0.35\textwidth}
+    \begin{subfigure}{0.45\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp4_sliders.png}
     \caption{Experiment parameters}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.35\textwidth}
+    \begin{subfigure}{0.45\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp4_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
-    \caption{Only soldiers at the begining}
+    \caption{Experiment with only soldiers at the begining of simulation}
     \label{soldiers_only}
 \end{figure}
 
@@ -531,16 +531,16 @@ which causes a stabilization near the original setup of population distribution
 in the system.
 
 \begin{figure}[h!]
-    \begin{subfigure}{0.35\textwidth}
+    \begin{subfigure}{0.45\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp5_sliders.png}
     \caption{Experiment parameters}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.35\textwidth}
+    \begin{subfigure}{0.45\textwidth}
     \includegraphics[width=\textwidth]{Images/Exp5_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
-    \caption{Incrementing the farmers and city halls}
+    \caption{Experiment with an increment in the number of farms and city halls}
     \label{more_buildings}
 \end{figure}
 
@@ -564,7 +564,17 @@ delincuency, to a stable level close to zero, this value is taken as the
 measure of each execution. Finally in the last row can be found the change of
 the system respect to the change in the parameter.\\
 
-Table \ref{table:government} shows the analysis of the first parameter.
+Table \ref{table:government} shows the analysis of the first parameter. It was
+found that the variation of this parameter has an important influence in the
+simulations as it defines how inclined is the civilian population towards
+delinquency. It is inversely proportional to the time that is necessary to
+decreace delinquency near zero.
+
+It is important to notice that the first value of that table is not a
+contradiction because of its negative value. A negative value in the last
+column indicates that the amount of ticks measured will change in an opposite
+direction to the change in the parameter, which means that the first variation
+of the table corresponds to a long execution time.\\
 
 \begin{table}[h!]
     \centering
@@ -582,12 +592,16 @@ Table \ref{table:government} shows the analysis of the first parameter.
         0.4 & 0.2  & 900 & -1725\\
         \hline
     \end{tabular}
-    \caption{Values for government support}
+    \caption{Sensitivity analysis for government support parameter}
     \label{table:government}
 \end{table}
 
-In the table \ref{table:energy} can be found the analysis for the second
-parameter.
+In table \ref{table:energy} can be found the analysis of the second
+parameter. The experiments shown that the model is very sensible to this
+parameter. It was found that the increment of its value will generate,
+in an average case, a longer execution of the model, but it is hard to tell how
+much influence is going to make in the simulation due to the stochastic
+nature of the system.\\
 
 \begin{table}[h!]
     \centering
@@ -603,11 +617,16 @@ parameter.
         6 & 2  & 6875 & 10225\\
         \hline
     \end{tabular}
-    \caption{Values for energy from food}
+    \caption{Sensitivity analysis for energy from food parameter}
     \label{table:energy}
 \end{table}
 
-Finally in table \ref{table:taxes} is the analysis of the third parameter.
+Finally in table \ref{table:taxes} is the analysis of the third parameter. It
+was found that the variation of the tax rate value is also inversly
+proportional to the number of ticks that are necessary to reduce delinquency
+towards zero. It is also important to notice that in a similar way than with
+the first parameter, a reduction of this value will couse an increase in the
+simulation time.\\
 
 \begin{table}[h!]
     \centering
@@ -629,11 +648,11 @@ Finally in table \ref{table:taxes} is the analysis of the third parameter.
         8 & 4  & 800  & -3850\\
         \hline
     \end{tabular}
-    \caption{Values for tax rate}
+    \caption{Sensitivity analysis for tax rate parameter}
     \label{table:taxes}
 \end{table}
 
-\section{Conclusions and recomendations}
+\section{Conclusions and recommendations}
 
 \begin{itemize}
     \item The position of buildings is a key fact in the execution of the model.
