@@ -267,7 +267,6 @@ The model is define in terms of three major groups, farmers that represent
 the productive class, bandits which represents the delinquency and soldiers
 that represent control of the government in the society. The dynamic of the
 system is define in terms of the interactions of these three groups.
-% search for houses
 
 \subsubsection{$\ \ $Observation}
 
@@ -298,7 +297,7 @@ the simulation.
 
 There is no input data used in the model.
 
-\subsubsection{Submodels}
+\subsubsection{Sub-models}
 
 \begin{itemize}
     \item \textbf{Move:} Is executed on each tick by all human agents, which
@@ -312,7 +311,7 @@ There is no input data used in the model.
     have at their disposal to refill their energy. Any remaining resources will
     be stored in their resting place for later use. On the other hand, if they
     do not have enough resources to do so, they will execute the
-    switch-occupation submodel.
+    switch-occupation sub-model.
 
     \item \textbf{Switch-occupation:} This one is executed in a different way
     depending on the agent occupation. In the case of farmers it will decide if
@@ -320,7 +319,7 @@ There is no input data used in the model.
     government support. For both bandits and soldiers it will cause them to
     switch occupation into farmers.
 
-    \item \textbf{Work:} This submodel is unique for farmers. When it is
+    \item \textbf{Work:} This sub-model is unique for farmers. When it is
     executed they will extract resources from the farm they are currently in.
     The amount of resources extracted will be equal to the max load they are
     able to carry. Finally they will set their destination to the city hall to
@@ -333,17 +332,17 @@ There is no input data used in the model.
     in the city hall to pay for soldiers expenses. Lastly they will change
     their destination to home in order to rest.
 
-    \item \textbf{Assault:} Only bandits are allowed to execute this submodel.
+    \item \textbf{Assault:} Only bandits are allowed to execute this sub-model.
     They will set their destination to the nearest farmer with non-zero load to
     steal all of their belongings. In the case that there is a nearby soldier
     they will prioritize moving away from them to avoid being caught. They
     will continue to do so until either their energy hits zero or they get to the
     maximum amount of load they are able to carry, and later set their destination
-    to their home in order to call the rest submodel.
+    to their home in order to call the rest sub-model.
 
-    \item \textbf{Seize:} Finally, this submodel is responsible to make
+    \item \textbf{Seize:} Finally, this sub-model is responsible to make
     soldiers set their destination to the nearest bandit, if they get close
-    enough, they will make them execute the switch-occupation submodel. All
+    enough, they will make them execute the switch-occupation sub-model. All
     the resources bandits carry when they get caught are then seized by the
     soldier. They will chase after bandits until either their energy hits zero
     or they meet their maximum load, after which they will change their
@@ -678,23 +677,23 @@ simulation time.\\
 
     \item Based on the experiments conducted it was found that the layout of
     buildings is a key factor in the execution of the model. Therefore a good
-    recomentation for future work would be the implementation of a way to
+    recommendation for future work would be the implementation of a way to
     set the position of buildings manually.
 
-    \item In the present model there are some adaptative directives, which allows
+    \item In the present model there are some adaptive directives, which allows
     the introduction of more humane behavior in the simulation. However the
     implementation of learning capabilities in agents would highly improve the
     overall model.
 
     \item The experiments conducted shown that the introduction of the
     government support enriched the model by giving the civilian population a
-    mechanism to to express the perseption of the actual government. However,
+    mechanism to to express the perception of the actual government. However,
     it is believed that a dynamic change in this value, based on the state of
     the system, could improve this characteristic.
 
-    \item It was observed in the testing of the model that the dificult access
-    zones tend to fall into poberty, housing a higher concentration of bandits.
-    It was also oberved that the violence indicators in this zones tend to be
+    \item It was observed in the testing of the model that the difficult access
+    zones tend to fall into poverty, housing a higher concentration of bandits.
+    It was also observed that the violence indicators in this zones tend to be
     low, due to the preference of bandits for zones with a higher number of
     farmers. Which mimics what happens in a real life setting.
 \end{itemize}
