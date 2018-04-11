@@ -23,9 +23,9 @@
 \title{FARMERS, BANDITS AND SOLDIERS AN AGENT BASED SIMULATION ABOUT
        DELINQUENCY IN THE SOCIETY}
 
-\author{Andres Felipe Ortega Montoya\\ [12pt]
+\author{Andrés Felipe Ortega Montoya\\ [12pt]
 aortega7@eafit.edu.co\\
-Ingenieria Matemática\\
+Ingeniería Matemática\\
 Universidad EAFIT\\
 \and
 Alejandro Salgado Gómez\\[12pt]
@@ -37,14 +37,14 @@ Universidad EAFIT\\
 \maketitle
 
 \section*{ABSTRACT}
-Delincuency is one of the main probles that societies face nowadays,
+Delinquency is one of the main problems that societies face nowadays,
 one the main reasons of this is the burden that it represents in the
 economy and the effect that has in the life quality of the population.
 This document describes the implementation of an agent base model that aims to
 simulate a simplified version of a society and some of their interactions,
 specifically those who have to do with the effects of delinquency.
 In this work the society is conformed by three social groups, the
-first one are farmers, that represent the productive class, the scond
+first one are farmers, that represent the productive class, the second
 one are bandits, which represents the delinquency, and the last ones
 are soldiers, that represents the public control. This work takes as base point
 the ideas proposed in some articles of systems dynamics and adapt them to an
@@ -53,18 +53,18 @@ agent based simulation. As implementation tool we use the NetLogo software
 
 \section{Introduction}
 
-Delinquency affects a lot of countries all arround the world. Because of the
-continuous problems that this actions generate in terms of social, econmical and
+Delinquency affects a lot of countries all around the world. Because of the
+continuous problems that this actions generate in terms of social, economical and
 political aspects, the nations continue to spend huge amount of resources
-trying to keep this problematic as controled as possible, but the results achived
+trying to keep this problematic as controlled as possible, but the results achieved
 are poor, as seen in the indices of peace. Actually countries have become
-less peaceful during the last decade, bringing enourmous concequences to the
+less peaceful during the last decade, bringing enormous consequences to the
 society. \cite{peace} \cite{violence}
 
 With this motivation the authors developed an agent based model in which they
 represent an artificial society that is conformed by three social groups,
 Farmers, Bandits and Soldiers. The main objective of this model is to
-analyse the effect of delincuency by testing different scenarios that
+analyze the effect of delinquency by testing different scenarios that
 occur based on the configuration of the parameters of the simulation,
 in order to see how this phenomenon affects the society and its
 economy.
@@ -79,11 +79,11 @@ work are described at the end of the document.
 
 \section{Previous work}
 
-This work is based on two main acticles, both addressed the problem from the
+This work is based on two main articles, both addressed the problem from the
 system dynamics perspective, however the authors find that the ideas proposed in
 this articles can be applied in an agent base simulation, giving the possibility
-to explore new caracteristics of the problem and see others in a more
-detail way, thanks to the granularity that this type of modelation offers.
+to explore new characteristics of the problem and see others in a more
+detail way, thanks to the granularity that this type of modeling offers.
 
 The first article studies an artificial society where they seek for politics
 that leads to a state of peace. In that work they represent the society with
@@ -91,14 +91,14 @@ the same groups as in the present work, and state that the members of the
 society can change their role, based on psychological or economical conditions,
 such as the level of empathy with their social group or the profits
 that their occupations generate. The objective was to find politics
-that leads to an estabilization of the system in a state of peace and
+that leads to an stabilization of the system in a state of peace and
 prosperity by changing different parameters of the model, such as the
-sensivility to violence or the initial population of the different social
+sensibility to violence or the initial population of the different social
 groups. \cite{article1}
 
 The second article is about the confrontations between an insurgent force and
-militar forces of a government. In that work they describe the effects and
-concequencies about different strategies that can be used to try to solve the
+military forces of a government. In that work they describe the effects and
+consequences about different strategies that can be used to try to solve the
 problem, always with the goal of minimizing the threats civilians are exposed to.
 This article states that one of the main factors that has to be taken
 into account is the support that the population has to its government, because
@@ -111,14 +111,14 @@ the actual state of the society. \cite{article2}
 \subsection{Generalities}
 
 This model is the representation of a simplified society in which three types
-of building define the infractucture necessary for the interactions that occurs
+of building define the infrastructure necessary for the interactions that occurs
 between the three social groups. In this model the
 economy is based on a single type of resource which represents all commodities,
 this resources are produced by farmers in the first type of building named
-farms, this buildings are assume as an infite source of income. This
+farms, this buildings are assume as an infinite source of income. This
 resources are also used as currency to pay taxes in the second type of
-building, named city hall, this building reseprent the government
-institutions and store the supplys that are used to sustain soldiers,
+building, named city hall, this building represent the government
+institutions and store the supplies that are used to sustain soldiers,
 which are in charge of seeking for the well being of the farmers by
 keeping bandit population at bay. The last building type, named houses,
 are used by farmers and bandits to store the spare resources that they
@@ -127,9 +127,9 @@ stealing, in the case of bandits.
 
 \subsubsection{Purpose}
 
-The purpose of the model is to analyse how delincuency affects the normal
-development of a socity, from the effect that has in the workforce and how
-reactions, like incrementing the public force angets, emerge as responce to
+The purpose of the model is to analyze how delinquency affects the normal
+development of a society, from the effect that has in the workforce and how
+reactions, like incrementing the public force agents, emerge as response to
 protect citizens from criminality.
 
 \subsubsection{Entities and state variables}
@@ -139,9 +139,9 @@ protect citizens from criminality.
     \item Farms: Provides an endless source of the necessary resources for the
     population to subsist with.
 
-    \item Houses: Serves as an storage for the spare resources an indivial has
+    \item Houses: Serves as an storage for the spare resources an individual has
     after using a portion of those to meet its needs. If a given individual
-    does not carry enought resources to refill its energy, they can use the
+    does not carry enough resources to refill its energy, they can use the
     ones they have previously stored in their house.
 
     \item City Hall: It stores the resources that farmers pay as taxes and also
@@ -163,14 +163,14 @@ protect citizens from criminality.
 
 \noindent \textbf{State variables}\\
 
-\noindent The common atributes farmers, bandits and soldiers have are:
+\noindent The common attributes farmers, bandits and soldiers have are:
 
 \begin{itemize}
     \item Energy: This serves as a way of telling of how much time an agent
     have before it needs to eat and thus return to its home or in the case or
     soldiers, city hall.
 
-    \item Load: It reprecents the quantity of resources a given agent is
+    \item Load: It represents the quantity of resources a given agent is
     carrying with itself at the moment.
 
     \item Destination: This is the current destination a given agent seeks to
@@ -180,12 +180,12 @@ protect citizens from criminality.
     the case of soldiers.
 \end{itemize}
 
-\noindent Houses and City Halls share a common atribute named inventory which
+\noindent Houses and City Halls share a common attribute named inventory which
 is the amount of resources it is storing at the moment.\hfill\break
 
 \subsubsection{Process overview and scheduling}
 
-Our procesess is divided in three parts, one for each social group. If the
+Our process is divided in three parts, one for each social group. If the
 agent is a farmer it will cycle through their assigned farm, city hall and
 house. If the agent is a bandit will cycle trough, chasing after farmers trying
 to assault them and going home. In the case of soldiers they loop over chasing
@@ -199,17 +199,17 @@ will lose 1 unit of energy.
 In this model it is supposed that the population is constant over time.  All
 agents want to collect resources, each one in a different way depending on its
 occupation. Also it is considered that there is a finite amount of weight and
-energy that each individual can have. The spupply of resources available on
+energy that each individual can have. The supply of resources available on
 farms and the amount of resources that can be stored in a building is taken
 as infinite. Finally each person has their own house.
 
 \subsubsection{Emergence}
 
-There are many emergence behaviour in the model like the agglomeration of
+There are many emergence behavior in the model like the agglomeration of
 agents in some parts of the map as a consequence of various farmers being
 assigned to the same workplace. This attracts bandits thus incrementing the
 criminality nearby this places and therefore making soldiers to appear in this
-zones. Also the appearrance of sectors with a high dencity of bandits living in
+zones. Also the appearance of sectors with a high density of bandits living in
 it due to the remoteness that some places have from farms or city halls, making
 the living as a farmer unsustainable.
 
@@ -217,7 +217,7 @@ the living as a farmer unsustainable.
 
 In the model agents adapt to their current situation if the conditions does not
 provides enough resources to supply for a living by means of changing their
-ocupation. It is important to notice that the social groups that an agent can
+occupation. It is important to notice that the social groups that an agent can
 switch to depends on the occupation that they are currently performing.
 
 \subsubsection{Objectives}
@@ -225,7 +225,7 @@ switch to depends on the occupation that they are currently performing.
 The objective of an agent varies depending on their current occupation. Farmers
 try to collect as much resources as they can by working their respective farms.
 Bandits try to steal as much resources from farmers as they can, trying not to
-be captured by soldiers. Finally soldiers seek to decreace the amount of
+be captured by soldiers. Finally soldiers seek to decrease the amount of
 bandits in the society.
 
 \subsubsection{Learning}
@@ -235,7 +235,7 @@ Learning capabilities of agents are not taken into account in this model.
 \subsubsection{Prediction}
 
 Prediction procedures are not taken into account as part of the agent's
-behaviour in this model.
+behavior in this model.
 
 \subsubsection{Sensing}
 
@@ -253,15 +253,15 @@ only. In the first case houses and city halls are used by active agents to
 store their spare resources and farms are used by farmers to get the resources
 they need for living. In the second case there are interactions between
 bandits and the farmers they are going to steal from, and between soldiers and
-the bandtis they are seeking to convert.
+the bandits they are seeking to convert.
 
 \subsubsection{Stochasticity}
 
-This model is present a stochastic behaviour due to the random initialization of
+This model is present a stochastic behavior due to the random initialization of
 buildings and the introduction of a fix probability to determine the change of
 occupation in the case of farmers to simulate the government support they have.
 
-\subsubsection{Collectives}
+\subsubsection{$\ \ $Collectives}
 
 The model is define in terms of three major groups, farmers that represent
 the productive class, bandits which represents the delinquency and soldiers
@@ -269,26 +269,26 @@ that represent control of the government in the society. The dynamic of the
 system is define in terms of the interactions of these three groups.
 % search for houses
 
-\subsubsection{Observation}
+\subsubsection{$\ \ $Observation}
 
 The variables that are necessary to know the current state of the system are
 the population of each social group. The violence indicator, which is defined
 in terms of the number of crimes committed in a specific location of the map.
-Finally the capital that each group is currently possesing, which describes the
-economical force and hence the success that the group has achived.
+Finally the capital that each group is currently possessing, which describes the
+economical force and hence the success that the group has achieved.
 
 \subsection{Details}
 
 \subsubsection{Initialization}
 
-The model has 14 paramerters, the first nine correspond to the population,
+The model has 14 parameters, the first nine correspond to the population,
 energy and max load of each social group. Also there are two parameters in
 charge of setting the amount of city halls and farms that the simulation will
 have. Another parameter is the energy from food, that defines the amount of
 energy recovered by each unit of resource. There is another parameter name tax
 rate that establishes the tax fee that farmers have to pay in the city halls.
 Finally the government support parameter is used as the probability that a
-farmer has to choose to become a bandit or a soldier when the choise arrises.
+farmer has to choose to become a bandit or a soldier when the choice arises.
 
 At the begining of the simulation the position of all agents is chosen randomly
 and all the parameters described above are used to determine the execution of
@@ -315,7 +315,7 @@ There is no input data used in the model.
     switch-occupation submodel.
 
     \item \textbf{Switch-occupation:} This one is executed in a different way
-    depending on the agent occupation. In the case of farmers it will dicide if
+    depending on the agent occupation. In the case of farmers it will decide if
     the new occupation is to became a soldier or a bandit depending on the
     government support. For both bandits and soldiers it will cause them to
     switch occupation into farmers.
@@ -336,14 +336,14 @@ There is no input data used in the model.
     \item \textbf{Assault:} Only bandits are allowed to execute this submodel.
     They will set their destination to the nearest farmer with non-zero load to
     steal all of their belongings. In the case that there is a nearby soldier
-    they will prioritice moving away from them to avoid being caught. They
+    they will prioritize moving away from them to avoid being caught. They
     will continue to do so until either their energy hits zero or they get to the
-    maximum amount of load they are able to carry, and later set their detination
+    maximum amount of load they are able to carry, and later set their destination
     to their home in order to call the rest submodel.
 
     \item \textbf{Seize:} Finally, this submodel is responsible to make
     soldiers set their destination to the nearest bandit, if they get close
-    enought, they will make them execute the switch-occupation submodel. All
+    enough, they will make them execute the switch-occupation submodel. All
     the resources bandits carry when they get caught are then seized by the
     soldier. They will chase after bandits until either their energy hits zero
     or they meet their maximum load, after which they will change their
@@ -354,18 +354,18 @@ There is no input data used in the model.
 \section{Input data}
 
 This model does not use any database for its implementation. The parameters
-descrived in the last section are what defines how the simulation will execute.
+described in the last section are what defines how the simulation will execute.
 
 \section{Implementation}
 
 As mentioned before the model was implemented using the NetLogo software
 \cite{netlogo}. The first element of the model is the simulation field
-pressented in figure \ref{imp:main_interface1} which shows the space distribution
+presented in figure \ref{imp:main_interface1} which shows the space distribution
 of all agents. Farmers are blue, bandits are orange and soldiers are
-green, just like their houses. Farms are shown in brown with the simbol of a cow
+green, just like their houses. Farms are shown in brown with the symbol of a cow
 and city halls are presented with gray color and a colonial house symbol. All
 agents show the amount of resources they have as a label on top of them. And the
-red squares represent the danger zones, their color intencity is directly
+red squares represent the danger zones, their color intensity is directly
 proportional to how dangerous is the location.
 
 \newpage
@@ -377,7 +377,7 @@ proportional to how dangerous is the location.
     \label{imp:main_interface1}
 \end{figure}
 
-The second element of the interface are the economicand pupulation indicators,
+The second element of the interface are the economical and population indicators,
 which are shown in figure \ref{imp:economy1} and figure
 \ref{imp:population_plot1} respectively. They show the total inventory that
 a specific group has stored in their respective buildings (houses for
@@ -409,8 +409,8 @@ danger measure of all locations.\\
     \label{imp:parameters1}
 \end{figure}
 
-Finaly in figure \ref{imp:buttons} are shown the three buttons to control the
-execution. The first one is used to initializate the model, the second one
+Finally in figure \ref{imp:buttons} are shown the three buttons to control the
+execution. The first one is used to initialize the model, the second one
 executes one tick of the simulation and the last one execute the model
 continuously.
 
@@ -423,7 +423,7 @@ continuously.
 
 \section{Verification and validation}
 
-After compare the results of the model with the ones shown in the refrence
+After compare the results of the model with the ones shown in the reference
 articles it was found that the model behaves as expected, even in cases with
 extreme conditions, like the lack of some parameter or its full usage.
 
@@ -478,10 +478,10 @@ decrease of bandits and takes the system to a state of peace.
 In figure \ref{only_farmers} there is an experiment that aims to show the respond
 of the model when the initial population is conformed exclusively of farmers. In
 this simulation there are two cases, the first one, which is illustrated in the
-figure, shows a period of stability at the begining of the simulation, that is
+figure, shows a period of stability at the beginning of the simulation, that is
 later is disturbed because the distributions of buildings causes that
-some houses are too far away from cityhalls or farms, which force
-farmers to change their ocupation, creating the dynamic represented. The other case
+some houses are too far away from city halls or farms, which force
+farmers to change their occupation, creating the dynamic represented. The other case
 is when the distribution of buildings allows the farmers to generate enough
 resources to live and therefore provokes a stabilization of the system in the
 initial state.\\
@@ -496,16 +496,16 @@ initial state.\\
     \includegraphics[width=\textwidth]{Images/Exp2_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
-    \caption{Experiment with only farmers at the begining of simulation}
+    \caption{Experiment with only farmers at the beginning of simulation}
     \label{only_farmers}
 \end{figure}
 
 Other cases can be found in figures \ref{bandits_only} and \ref{soldiers_only}
 where the initial population is confirmed only by bandits. In this experiment
-the behaviour of the simulation is similar to the case presented above, there
-is a periord of stable execution followed by a great increment of farmers in
+the behavior of the simulation is similar to the case presented above, there
+is a period of stable execution followed by a great increment of farmers in
 the system due to the fact that there is no resource production in the system.
-At this point the same two cases of the past experiment reapper under the same
+At this point the same two cases of the past experiment reappear under the same
 conditions and with the same consequences. Here the first case is shown in
 figure \ref{bandits_only} and the second one is shown in figure
 \ref{soldiers_only}.\\
@@ -520,7 +520,7 @@ figure \ref{bandits_only} and the second one is shown in figure
     \includegraphics[width=\textwidth]{Images/Exp3_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
-    \caption{Experiment with only bandits at the begining of simulation}
+    \caption{Experiment with only bandits at the beginning of simulation}
     \label{bandits_only}
 \end{figure}
 
@@ -534,16 +534,16 @@ figure \ref{bandits_only} and the second one is shown in figure
     \includegraphics[width=\textwidth]{Images/Exp4_indicators.png}
     \caption{Experiment indicators}
     \end{subfigure}%
-    \caption{Experiment with only soldiers at the begining of simulation}
+    \caption{Experiment with only soldiers at the beginning of simulation}
     \label{soldiers_only}
 \end{figure}
 
 \newpage
 
 Finally in figure \ref{more_buildings} there is and experiment where the number
-of famers and city halls are incremented. This change generates that the farmers
-can have such a profitable recolection of resources that (even with the presence
-of some bandits in the system) the decrease of theier revenue, either becouse of
+of farmers and city halls are incremented. This change generates that the farmers
+can have such a profitable recollection of resources that (even with the presence
+of some bandits in the system) the decrease of their revenue, either because of
 tax payments or assaults, is not enough to make them change their occupation,
 which causes a stabilization near the original setup of population distribution
 in the system.
@@ -575,8 +575,8 @@ The analysis is represented in tables \ref{table:government} to
 \cite{modbook}. The first row specifies the value of the parameter. The second
 one shows the change that was performed, a positive value means an increment
 and a negative value a decrement. The third parameter represents the number
-of ticks necessary to decreace the population of bandits, and therefore the
-delincuency, to a stable level close to zero, this value is taken as the
+of ticks necessary to decrease the population of bandits, and therefore the
+delinquency, to a stable level close to zero, this value is taken as the
 measure of each execution. Finally in the last row can be found the change of
 the system respect to the change in the parameter.\\
 
@@ -584,7 +584,7 @@ Table \ref{table:government} shows the analysis of the first parameter. It was
 found that the variation of this parameter has an important influence in the
 simulations as it defines how inclined is the civilian population towards
 delinquency. It is inversely proportional to the time that is necessary to
-decreace delinquency near zero.
+decrease delinquency near zero.
 
 It is important to notice that the first value of that table is not a
 contradiction because of its negative value. A negative value in the last
@@ -638,10 +638,10 @@ nature of the system.\\
 \end{table}
 
 Finally in table \ref{table:taxes} is the analysis of the third parameter. It
-was found that the variation of the tax rate value is also inversly
+was found that the variation of the tax rate value is also inversely
 proportional to the number of ticks that are necessary to reduce delinquency
 towards zero. It is also important to notice that in a similar way than with
-the first parameter, a reduction of this value will couse an increase in the
+the first parameter, a reduction of this value will cause an increase in the
 simulation time.\\
 
 \begin{table}[h!]
